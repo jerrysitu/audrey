@@ -1,0 +1,27 @@
+.input-field {
+  @apply appearance-none border-2 border-gray-400 shadow rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-opacity-50;
+}
+
+.select-field {
+  @apply cursor-pointer appearance-none border-2 bg-gray-50 border-gray-400 shadow rounded-lg p-2 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-opacity-50;
+}
+
+.checkbox {
+  @apply h-4 w-4 rounded border-gray-300 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 focus:ring-opacity-50 text-indigo-500;
+}
+
+.textarea {
+  @apply border-solid border-2 border-gray-400 shadow-md;
+}
+
+.pill {
+  @apply p-1 border rounded;
+}
+
+.pill-green {
+  @apply text-green-700 bg-green-50 border-green-400;
+}
+
+.pill-blue {
+  @apply text-blue-700 bg-blue-50 border-blue-400;
+}

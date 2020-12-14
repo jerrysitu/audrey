@@ -1,0 +1,116 @@
+<div class="flex flex-col mx-auto mt-24">
+
+  <div class="mx-auto <%= unless @user_type == "", do: "hidden" %>">
+    <div class="text-2xl text-center">I'm a...</div>
+    <div class="flex mx-auto">
+      <div phx-click="select-user-type" phx-value-type="tenant" class="btn btn-emerald w-64">Tenant</div>
+      <div phx-click="select-user-type" phx-value-type="landlord" class="ml-2 btn btn-emerald w-64">Landlord / Property Manager</div>
+    </div>
+  </div>
+
+  <div class="mx-auto <%= if @user_type == "", do: "hidden" %>">
+
+    <div class="mt-2">
+      <form phx-submit="save-property">
+        <div class="">
+          <%=
+              text_input :property, :street_address,
+              class: "input-field w-full",
+              placeholder: "123 Main Street",
+              autocomplete: "off",
+              required: true
+          %>
+          <div class="text-sm text-gray-500">
+            Street Address
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="w-1/2">
+            <%=
+                text_input :property, :city,
+                class: "input-field w-full",
+                placeholder: "Vancouver",
+                autocomplete: "off",
+                required: true
+            %>
+            <div class="text-sm text-gray-500">
+              City
+            </div>
+          </div>
+
+          <div class="w-1/2 ml-2">
+            <%=
+                text_input :property, :state,
+                class: "input-field w-full",
+                placeholder: "British Columbia",
+                autocomplete: "off",
+                required: true
+            %>
+            <div class="text-sm text-gray-500">
+              State / Province
+            </div>
+          </div>
+        </div>
+
+         <div class="flex">
+          <div class="w-1/2">
+            <%=
+                text_input :property, :zip,
+                class: "input-field w-full",
+                placeholder: "V6B 2J1",
+                autocomplete: "off",
+                required: true
+            %>
+            <div class="text-sm text-gray-500">
+              Zip Code / Postal Code
+            </div>
+          </div>
+
+          <div class="w-1/2 ml-2">
+            <%=
+                text_input :property, :country,
+                class: "input-field w-full",
+                placeholder: "Canada",
+                autocomplete: "off",
+                required: true
+            %>
+            <div class="text-sm text-gray-500">
+              Country
+            </div>
+          </div>
+        </div>
+
+        <%=
+          text_input :user, :user_type,
+          class: "hidden",
+          value: @user_type,
+          autocomplete: "off",
+          required: true
+        %>
+
+        <div class="flex justify-end">
+          <button phx-click="select-user-type" phx-value-type="" class="btn btn-light-gray w-24 mt-2">Back</button>
+          <button type="submit" class="btn btn-emerald w-24 mt-2 ml-2">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="mt-4 p-4 flex <%= unless @user_type == "", do: "hidden" %>">
+    <%= for property <- @properties do %>
+      <div phx-click="property-redirect" phx-value-property-id="<%= property.id %>" class="flex flex-col appearance-none border-2 shadow rounded-lg p-4 cursor-pointer bg-indigo-500 hover:bg-indigo-600 w-48">
+        <div class="text-indigo-100"><%= property.user_type %></div>
+        <div class="text-indigo-100"><%= property.street_address %></div>
+        <div class="flex text-indigo-100">
+          <div class=""><%= property.city %>,</div>
+          <div class="ml-1"><%= property.state %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+
+</div>

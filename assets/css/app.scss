@@ -1,0 +1,17 @@
+/* This file is for your main application css. */
+@import "../node_modules/nprogress/nprogress.css";
+
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+@import "./components/buttons.scss";
+@import "./components/forms.scss";
+
+@import "./custom.scss";
+
+/* Put your custom utilities here */
+
+@import "./liveview.scss";

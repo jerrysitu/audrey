@@ -1,0 +1,96 @@
+<div class="">
+
+  <div class="text-gray-900">
+    <div class=""><%= @property.street_address %></div>
+    <div class="flex">
+      <div class=""><%= @property.city %>,</div>
+      <div class="ml-1"><%= @property.state %></div>
+    </div>
+  </div>
+
+
+  <form phx-submit="submit-comment">
+    <div class="flex flex-col">
+      <div class="flex items-baseline">
+        <div class="">Rating</div>
+        <%=
+          select(:property_comment, :rating, [{"1", "1"}, {"2", "2"}, {"3", "3"}, {"4", "4"}, {"5", "5"}],
+          class:
+            "w-16 ml-2 select-field")
+        %>
+      </div>
+
+
+      <%=
+        text_input :property_comment, :comment,
+        class: "input-field w-96",
+        autocomplete: "off",
+        required: true
+      %>
+      <div class="text-sm text-gray-700">Comment</div>
+      <%=
+        text_input :property_comment, :property_id,
+        class: "hidden",
+        autocomplete: "off",
+        value: @property.id,
+        required: true
+      %>
+    </div>
+
+    <svg class="w-7 h-7 cursor-pointer fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
+    <svg class="w-7 h-7 cursor-pointer fill-current hover:text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
+    <svg class="w-7 h-7 cursor-pointer fill-current hover:text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"/></svg>
+
+    <div class="">
+      <button phx-click="back-to-main" class="btn btn-light-gray w-24 mt-2">Back</button>
+      <button type="submit" class="btn btn-emerald w-24 mt-2 ml-2">Submit</button>
+    </div>
+  </form>
+
+  <section class="row" phx-update="ignore" phx-hook="MapSightingsHandler" id="mapsighting">
+    <div id="map" class="column h-96 w-96">
+    </div>
+  </section>
+
+  <div class="">
+    <%= for comment <- @property_comments do %>
+      <div class="flex">
+        <div class="text-gray-700"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %></div>
+        <div class="ml-2"><%= comment.comment %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTQ0SFFJ8WHubDbBK-Anl_uEvz5UsnP5Q&callback=initMap&libraries=&v=weekly"
+  defer
+></script>
+
+<script>
+ (function(exports) {
+    "use strict";
+
+    function initMap() {
+      exports.map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+          lat: <%= @property.latitude %>,
+          lng: <%= @property.longitude %>
+        },
+        zoom: 12
+      });
+
+      new google.maps.Marker({
+        position:
+            {
+              lat: <%= @property.latitude %>,
+              lng: <%= @property.longitude %>
+            },
+        map,
+      });
+      }
+
+        exports.initMap = initMap;
+      })((this.window = this.window || {}));
+</script>
