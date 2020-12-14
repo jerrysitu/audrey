@@ -12,17 +12,11 @@ defmodule AudreyWeb.PropertyLive.Show do
 
     property_comments = Audrey.Location.list_property_comments_by_property_id(property_id)
 
-    property_coorindates = %{
-      latitude: property.latitude,
-      longitude: property.longitude
-    }
-
     {
       :noreply,
       socket
       |> assign(property_comments: property_comments)
       |> assign(property: property)
-      #  |> push_event("new_sighting", %{sighting: property_coorindates})
     }
   end
 
