@@ -45,7 +45,8 @@ module.exports = {
         "3xl": "1800px",
       },
       spacing: {
-        128: "28rem",
+        128: "32rem",
+        144: "36rem",
       },
       transitionDuration: {
         2000: "2000ms",
