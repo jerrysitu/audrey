@@ -19,6 +19,7 @@ defmodule AudreyWeb.Router do
 
     live "/", PageLive, :index
 
+    live "/property_setup/", PropertyLive.Setup, :setup
     live "/property/:id", PropertyLive.Show, :show
   end
 

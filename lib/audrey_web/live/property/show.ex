@@ -28,7 +28,7 @@ defmodule AudreyWeb.PropertyLive.Show do
       ) do
     {:noreply,
      socket
-     |> push_redirect(to: Routes.page_path(socket, :index))}
+     |> redirect(to: Routes.page_path(socket, :index))}
   end
 
   def handle_event(

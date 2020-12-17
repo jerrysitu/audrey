@@ -12,6 +12,12 @@ module.exports = {
   extend: {},
   theme: {
     extend: {
+      maxHeight: {
+        "(screen-24)": "calc(100vh - 6rem)",
+      },
+      height: {
+        "blah-24": "calc(100vh - 6rem)",
+      },
       fontSize: {
         xxs: "0.50rem",
       },

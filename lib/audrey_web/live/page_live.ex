@@ -92,4 +92,14 @@ defmodule AudreyWeb.PageLive do
     # socket
     # |> redirect(to: Routes.property_show_path(socket, :show, property_id))
   end
+
+  def handle_event(
+        "redirect-to-setup",
+        _params,
+        socket
+      ) do
+    {:noreply,
+     socket
+     |> redirect(to: Routes.property_setup_path(socket, :setup))}
+  end
 end
