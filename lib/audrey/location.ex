@@ -31,7 +31,7 @@ defmodule Audrey.Location do
   def list_property_comments_by_property_id(property_id) do
     PropertyComment
     |> where([p], p.property_id == ^property_id)
-    |> order_by(asc: :inserted_at)
+    |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 

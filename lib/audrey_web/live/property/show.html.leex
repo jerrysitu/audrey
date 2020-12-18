@@ -1,64 +1,112 @@
 <div class="">
 
-  <div class="flex flex-col appearance-none rounded-lg p-4 m-2 cursor-pointer bg-white">
-    <div class="text-gray-800 whitespace-nowrap">
-      <div class=""><%= @property.street_number %></div>
-      <div class=""><%= @property.route %></div>
-    </div>
-    <div class="flex text-gray-800 whitespace-nowrap">
-      <div class=""><%= @property.locality %>, <%= @property.administrative_area_level_1_short %></div>
-    </div>
-    <div class="text-gray-800"><%= @property.postal_code %></div>
-  </div>
+  <div class="flex h-screen">
+    <div class="w-1/2 flex flex-col">
+      <div class="h-1/2">
+        <div class="bg-red-200 h-4/6">Some photos here</div>
+        <div class="h-2/6 bg-violet-200">
+          <div class="flex">
+            <div class=""><%= @property |> Map.get(:neighborhood, "") %></div>
+            <div class="ml-1"> - </div>
+            <div class="ml-1"><%= @property |> Map.get(:street_number, "") %></div>
+            <div class="ml-1"><%= @property |> Map.get(:route, "") %></div>
+            <div class="">,</div>
+            <div class="ml-1"><%= @property |> Map.get(:locality, "") %></div>
+            <div class="">,</div>
+            <div class="ml-1"><%= @property |> Map.get(:administrative_area_level_1_short, "") %></div>
+            <div class="ml-1"><%= @property |> Map.get(:postal_code, "") %></div>
+          </div>
+          <div class="">More details. Amenities, room, sq-footage, etc.</div>
+        </div>
 
-
-  <form phx-submit="submit-comment">
-    <div class="flex flex-col">
-      <div class="flex items-baseline">
-        <div class="">Rating</div>
-        <%=
-          select(:property_comment, :rating, [{"1", "1"}, {"2", "2"}, {"3", "3"}, {"4", "4"}, {"5", "5"}],
-          class:
-            "w-16 ml-2 select-field")
-        %>
       </div>
 
 
-      <%=
-        text_input :property_comment, :comment,
-        class: "input-field w-96",
-        autocomplete: "off",
-        required: true
-      %>
-      <div class="text-sm text-gray-700">Comment</div>
-      <%=
-        text_input :property_comment, :property_id,
-        class: "hidden",
-        autocomplete: "off",
-        value: @property.id,
-        required: true
-      %>
-    </div>
-
-    <div class="">
-      <button phx-click="back-to-main" class="btn btn-light-gray w-24 mt-2">Back</button>
-      <button type="submit" class="btn btn-emerald w-24 mt-2 ml-2">Submit</button>
-    </div>
-  </form>
-
-  <section class="row" phx-update="ignore" phx-hook="MapSightingsHandler" id="mapsighting">
-    <div id="map" class="column h-96 w-96">
-    </div>
-  </section>
-
-  <div class="">
-    <%= for comment <- @property_comments do %>
-      <div class="flex">
-        <div class="text-gray-700"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %></div>
-        <div class="ml-2"><%= comment.comment %></div>
+      <div class="h-1/2 bg-pink-200">
+        <section class="z-10" phx-update="ignore" phx-hook="MapSightingsHandler" id="mapsighting">
+          <div id="map" class="h-screen-1/2 w-full">
+          </div>
+        </section>
       </div>
-    <% end %>
+    </div>
+
+    <div class="w-1/2">
+      <div class="p-4">
+        <form phx-submit="submit-comment">
+          <div class="flex flex-col">
+            <div class="flex flex-col">
+              <div class="text-2xl">Comments section</div>
+              <div class="flex items-baseline">
+                <div class="">Rating</div>
+                <%=
+                  select(:property_comment, :rating, [{"1", "1"}, {"2", "2"}, {"3", "3"}, {"4", "4"}, {"5", "5"}],
+                  class:
+                    "w-16 ml-2 select-field")
+                %>
+              </div>
+            </div>
+
+            <div class="flex items-baseline">
+              <div class="">
+                <%=
+                  text_input :property_comment, :comment,
+                  class: "input-field w-96",
+                  autocomplete: "off",
+                  required: true
+                %>
+                <%=
+                  text_input :property_comment, :property_id,
+                  class: "hidden",
+                  autocomplete: "off",
+                  value: @property.id,
+                  required: true
+                %>
+                <div class="text-sm text-gray-700">Comment</div>
+              </div>
+
+              <button type="submit" class="btn btn-emerald w-24 ml-2 h-10">Submit</button>
+            </div>
+
+            <div class="">
+              <%= for comment <- @property_comments do %>
+                <div class="flex p-2 my-2 rounded-md shadow border-2 border-violet-400">
+                  <div class="text-gray-700"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %></div>
+                  <div class="ml-2"><%= comment.comment %></div>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="">
+            <button phx-click="back-to-main" class="btn btn-light-gray w-24 mt-2">Back</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <div class="hidden">
+
+    <div class="flex flex-col appearance-none rounded-lg p-4 m-2 cursor-pointer bg-white">
+      <div class="text-gray-800 whitespace-nowrap">
+        <div class=""><%= @property.street_number %></div>
+        <div class=""><%= @property.route %></div>
+      </div>
+      <div class="flex text-gray-800 whitespace-nowrap">
+        <div class=""><%= @property.locality %>, <%= @property.administrative_area_level_1_short %></div>
+      </div>
+      <div class="text-gray-800"><%= @property.postal_code %></div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
 </div>
 
 
@@ -77,7 +125,7 @@
           lat: <%= @property.latitude %>,
           lng: <%= @property.longitude %>
         },
-        zoom: 12
+        zoom: 15
       });
 
       new google.maps.Marker({

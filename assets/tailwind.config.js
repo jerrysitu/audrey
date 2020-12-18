@@ -16,7 +16,8 @@ module.exports = {
         "(screen-24)": "calc(100vh - 6rem)",
       },
       height: {
-        "blah-24": "calc(100vh - 6rem)",
+        "screen-24": "calc(100vh - 6rem)",
+        "screen-1/2": "calc(100vh - 50vh)",
       },
       fontSize: {
         xxs: "0.50rem",

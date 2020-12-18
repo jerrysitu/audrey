@@ -13,7 +13,8 @@ defmodule Audrey.Location.PropertyComment do
     property_comment
     |> cast(attrs, [
       :property_id,
-      :comment
+      :comment,
+      :inserted_at
     ])
   end
 end

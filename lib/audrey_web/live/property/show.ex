@@ -40,7 +40,8 @@ defmodule AudreyWeb.PropertyLive.Show do
 
     Audrey.Location.create_property_comment(%{
       property_id: property_id,
-      comment: comment
+      comment: comment,
+      inserted_at: Timex.now("America/Vancouver")
     })
 
     property_comments = Audrey.Location.list_property_comments_by_property_id(property_id)
