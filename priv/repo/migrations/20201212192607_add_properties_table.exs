@@ -37,7 +37,5 @@ defmodule Audrey.Repo.Migrations.AddPropertiesTable do
 
       timestamps()
     end
-
-    create unique_index(:properties, [:google_maps_place_id])
   end
 end
