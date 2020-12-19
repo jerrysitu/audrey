@@ -504,6 +504,15 @@ defmodule Audrey.Seed.MacDonalds do
         street_address: "5776 Ladner Trunk Rd",
         zip: "V4K 1X6",
         user_type: "landlord"
+      },
+      %{
+        city: "New York",
+        country: "United States",
+        latitude: 40.777901,
+        longitude: -73.982472,
+        street_address: "2049 Broadway",
+        zip: "10023",
+        user_type: "landlord"
       }
     ]
 
@@ -514,165 +523,11 @@ defmodule Audrey.Seed.MacDonalds do
 
       IO.inspect(geocode_response, label: "geocode_response!!!")
 
-      lng =
-        geocode_response
-        |> Map.get(:body, [])
-        |> Map.get("results", [])
-        |> List.first()
-        |> get_in(["geometry", "location", "lng"])
-
-      lat =
-        geocode_response
-        |> Map.get(:body, [])
-        |> Map.get("results", [])
-        |> List.first()
-        |> get_in(["geometry", "location", "lat"])
-
-      first_address_component =
-        geocode_response
-        |> Map.get(:body, [])
-        |> Map.get("results", [])
-        |> List.first()
-        |> Map.get("address_components", [])
-
-      first_address_component |> IO.inspect(label: "first_address_component!!!")
-
-      street_number =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["street_number"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      street_number_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["street_number"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      route =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["route"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      route_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["route"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      neighborhood =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["neighborhood", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      neighborhood_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["neighborhood", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      locality =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["locality", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      locality_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["locality", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      administrative_area_level_2 =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["administrative_area_level_2", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      administrative_area_level_2_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["administrative_area_level_2", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      administrative_area_level_1 =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["administrative_area_level_1", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      administrative_area_level_1_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["administrative_area_level_1", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      country =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["country", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      country_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["country", "political"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      postal_code =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["postal_code"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("long_name")
-
-      postal_code_short =
-        first_address_component
-        |> Enum.filter(fn x -> x["types"] == ["postal_code"] end)
-        |> List.first()
-        |> account_for_empty_list()
-        |> Map.get("short_name")
-
-      Audrey.Location.create_property(%{
-        street_number: street_number,
-        street_number_short: street_number_short,
-        route: route,
-        route_short: route_short,
-        neighborhood: neighborhood,
-        neighborhood_short: neighborhood_short,
-        locality: locality,
-        locality_short: locality_short,
-        administrative_area_level_2: administrative_area_level_2,
-        administrative_area_level_2_short: administrative_area_level_2_short,
-        administrative_area_level_1: administrative_area_level_1,
-        administrative_area_level_1_short: administrative_area_level_1_short,
-        country: country,
-        country_short: country_short,
-        postal_code: postal_code,
-        postal_code_short: postal_code_short,
-        longitude: lng,
-        latitude: lat,
-        user_type: "landlord"
-      })
+      Audrey.GoogleMaps.parse_geo_code_response(geocode_response)
+      |> Map.put(:user_type, "landlord")
+      |> Audrey.Location.create_property()
     end)
   end
-
-  defp account_for_empty_list(nil), do: %{}
-  defp account_for_empty_list(map), do: map
 end
+
+# Audrey.Seed.MacDonalds.run

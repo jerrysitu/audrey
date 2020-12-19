@@ -23,62 +23,6 @@ defmodule AudreyWeb.PageLive do
   end
 
   def handle_event(
-        "save-property",
-        %{
-          "property" => %{
-            "city" => city,
-            "state" => state,
-            "street_address" => street_address,
-            "zip" => zip,
-            "country" => country
-          },
-          "user" => %{"user_type" => user_type}
-        } = params,
-        socket
-      ) do
-    IO.inspect(params, label: "params!!")
-
-    address = "#{street_address}+#{city}+#{state}+#{zip}+#{country}"
-
-    # address = "210+Carrall+street+vancouver"
-
-    {:ok, geocode_response} = Audrey.API.GoogleMaps.get_geocode(address)
-
-    long =
-      geocode_response
-      |> Map.get(:body, [])
-      |> Map.get("results", [])
-      |> List.first()
-      |> get_in(["geometry", "location", "lng"])
-
-    lat =
-      geocode_response
-      |> Map.get(:body, [])
-      |> Map.get("results", [])
-      |> List.first()
-      |> get_in(["geometry", "location", "lat"])
-
-    Audrey.Location.create_property(%{
-      city: city,
-      state: state,
-      street_address: street_address,
-      user_type: user_type,
-      zip: zip,
-      country: country,
-      longitude: long,
-      latitude: lat
-    })
-    |> IO.inspect(label: "Created property")
-
-    properties = Audrey.Location.list_properties()
-
-    {:noreply,
-     socket
-     |> assign(properties: properties)
-     |> assign(user_type: "")}
-  end
-
-  def handle_event(
         "property-redirect",
         %{"property-id" => property_id} = params,
         socket
@@ -102,4 +46,7 @@ defmodule AudreyWeb.PageLive do
      socket
      |> redirect(to: Routes.property_setup_path(socket, :setup))}
   end
+
+  defp account_for_empty_list(nil), do: %{}
+  defp account_for_empty_list(map), do: map
 end

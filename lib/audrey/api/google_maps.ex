@@ -52,3 +52,11 @@ end
 #     lng: x |> get_in(["geometry", "location", "lng"])
 #   }
 # end)
+
+# "1608+Parmer Ln+Austin+TX+78753+United States" |> Audrey.API.GoogleMaps.get_geocode()
+
+# "5 Rue du 16éme Chasseurs, 21200 Beaune, France" |> String.replace(" ", "+") |> String.replace(",", "") |> Audrey.API.GoogleMaps.get_geocode()
+
+# "123 fake street, burnaby, bc canada" |> String.replace(" ", "+") |> String.replace(",", "") |> Audrey.API.GoogleMaps.get_geocode()
+
+# "2049 Broadway, New York, America" |> String.replace(" ", "+") |> String.replace(",", "") |> Audrey.API.GoogleMaps.get_geocode()
