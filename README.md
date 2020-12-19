@@ -24,7 +24,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 start remote console first
 
 ```
-  Audrey.Seed.MacDonalds.run
+Audrey.Seed.MacDonalds.run
 ```
 
 ## TODO

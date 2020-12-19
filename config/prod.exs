@@ -10,12 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :audrey, AudreyWeb.Endpoint,
-  url: [host: "example.com", port: 80],
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: System.get_env("audrey-staging.gigalixirapp.com", ""), port: 443],
+  url: [scheme: "https", host: System.get_env("audreyapp.jerrysitu.com", ""), port: 443],
   server: true,
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  check_origin: ["https://audrey-staging.gigalixirapp.com"],
+  check_origin: ["https://audreyapp.jerrysitu.com"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
