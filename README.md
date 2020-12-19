@@ -29,3 +29,39 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - on load, ask where they're from. Load properties nearby.
 - Add square foot, ammenities, # of bedrooms/wash/etc.
 - Auth / Login.
+
+# Gigalixir
+
+### Start remote console
+
+```
+gigalixir ps:remote_console
+```
+
+### Migrate Database
+
+```
+gigalixir ps:migrate
+```
+
+### Reset database
+
+```
+Ecto.Migrator.run(Audrey.Repo, Application.app_dir(:audrey, "priv/repo/migrations"), :down, [all: true])
+
+Ecto.Migrator.run(Audrey.Repo, Application.app_dir(:audrey, "priv/repo/migrations"), :up, [all: true])
+```
+
+### Switch git remotes
+
+```
+gigalixir git:remote $APP_NAME
+
+gigalixir git:remote audrey-staging
+```
+
+### Deploy
+
+```
+git push gigalixir
+```
