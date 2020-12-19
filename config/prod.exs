@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :audrey, AudreyWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: System.get_env("audreyapp.jerrysitu.com", ""), port: 443],
+  url: [scheme: "https", host: "audreyapp.jerrysitu.com", port: 443],
   server: true,
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   check_origin: ["https://audreyapp.jerrysitu.com"],
