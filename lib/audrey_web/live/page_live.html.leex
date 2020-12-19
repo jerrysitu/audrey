@@ -37,7 +37,7 @@
 
 
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTQ0SFFJ8WHubDbBK-Anl_uEvz5UsnP5Q&callback=initMap&libraries=&v=weekly"
+  src="https://maps.googleapis.com/maps/api/js?key=<%= System.get_env("AUDREY_APP_WEBSITE_GOOGLE_API_KEY", "") %>&callback=initMap&libraries=&v=weekly"
   defer
 ></script>
 <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
