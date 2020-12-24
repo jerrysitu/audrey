@@ -21,7 +21,12 @@ module.exports = {
         "screen-24": "calc(100vh - 6rem)",
         "screen-12": "calc(100vh - 3rem)",
         "screen-16": "calc(100vh - 4rem)",
-        "screen-1/2": "calc(100vh - 50vh)",
+        "screen-1/2": "calc(100vh - 50vh - 2rem)",
+      },
+      maxWidth: {
+        "8xl": "88rem",
+        "9xl": "96rem",
+        "10xl": "104rem",
       },
       fontSize: {
         xxs: "0.50rem",
