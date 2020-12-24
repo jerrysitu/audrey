@@ -14,9 +14,13 @@ module.exports = {
     extend: {
       maxHeight: {
         "(screen-24)": "calc(100vh - 6rem)",
+        "(screen-12)": "calc(100vh - 3rem)",
+        "(screen-16)": "calc(100vh - 4rem)",
       },
       height: {
         "screen-24": "calc(100vh - 6rem)",
+        "screen-12": "calc(100vh - 3rem)",
+        "screen-16": "calc(100vh - 4rem)",
         "screen-1/2": "calc(100vh - 50vh)",
       },
       fontSize: {

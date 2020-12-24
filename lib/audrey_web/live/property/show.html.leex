@@ -1,7 +1,7 @@
 <div class="">
 
   <div class="flex h-screen">
-    <div class="w-1/2 flex flex-col">
+    <div class="w-1/2 flex flex-col relative">
       <div class="h-1/2">
         <div class="bg-red-200 h-4/6">Some photos here</div>
         <div class="h-2/6 bg-violet-200">
@@ -30,81 +30,82 @@
       </div>
     </div>
 
-    <div class="w-1/2">
+    <div class="w-1/2 overflow-y-scroll">
       <div class="p-4">
-        <form phx-submit="submit-comment">
+        <div class="flex flex-col">
           <div class="flex flex-col">
-            <div class="flex flex-col">
-              <div class="text-2xl">Comments section</div>
+            <div class="flex justify-between">
+              <div class="text-xl">Reviews</div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="w-full">
               <div class="flex items-baseline">
-                <div class="">Rating</div>
-                <%=
-                  select(:property_comment, :rating, [{"1", "1"}, {"2", "2"}, {"3", "3"}, {"4", "4"}, {"5", "5"}],
-                  class:
-                    "w-16 ml-2 select-field")
-                %>
-              </div>
-            </div>
-
-            <div class="flex items-baseline">
-              <div class="">
-                <%=
-                  text_input :property_comment, :comment,
-                  class: "input-field w-96",
-                  autocomplete: "off",
-                  required: true
-                %>
-                <%=
-                  text_input :property_comment, :property_id,
-                  class: "hidden",
-                  autocomplete: "off",
-                  value: @property.id,
-                  required: true
-                %>
-                <div class="text-sm text-gray-700">Comment</div>
-              </div>
-
-              <button type="submit" class="btn btn-emerald w-24 ml-2 h-10">Submit</button>
-            </div>
-
-            <div class="">
-              <%= for comment <- @property_comments do %>
-                <div class="flex p-2 my-2 rounded-md shadow border-2 border-violet-400">
-                  <div class="text-gray-700"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %></div>
-                  <div class="ml-2"><%= comment.comment %></div>
+                <form phx-submit="submit-comment">
+                  <%=
+                    text_input :property_comment, :property_id,
+                    class: "hidden",
+                    autocomplete: "off",
+                    value: @property.id,
+                    required: true
+                  %>
                 </div>
-              <% end %>
+
+                <div class="flex w-full mt-2">
+                  <%=
+                    text_input :property_comment, :comment,
+                    class: "w-5/6",
+                    autocomplete: "off",
+                    required: true
+                  %>
+
+                  <button type="submit" class="w-1/6 ml-2 btn btn-emerald h-10">Submit</button>
+                </form>
+              </div>
             </div>
 
+
+
           </div>
+
           <div class="">
-            <button phx-click="back-to-main" class="btn btn-light-gray w-24 mt-2">Back</button>
+            <%= for comment <- @property_comments do %>
+              <div class="flex flex-col p-4 my-2 rounded-md shadow bg-white">
+                <div class="flex items-baseline">
+                  <div class="font-semibold">Anonymous</div>
+                  <div class="ml-2 text-xs text-gray-500"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %> (<%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{relative}", :relative) %>)</div>
+                </div>
+
+                <div class="text-gray-700"><%= comment.comment %></div>
+
+                <div class="flex mt-2 items-baseline">
+                  <button class="inline-flex items-center flex-column">
+                      <svg class="w-5 h-5 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
+                          viewBox="0 0 95 78" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                              d="M29.58 0c1.53.064 2.88 1.47 2.879 3v11.31c19.841.769 34.384 8.902 41.247 20.464 7.212 12.15 5.505 27.83-6.384 40.273-.987 1.088-2.82 1.274-4.005.405-1.186-.868-1.559-2.67-.814-3.936 4.986-9.075 2.985-18.092-3.13-24.214-5.775-5.78-15.377-8.782-26.914-5.53V53.99c-.01 1.167-.769 2.294-1.848 2.744-1.08.45-2.416.195-3.253-.62L.85 30.119c-1.146-1.124-1.131-3.205.032-4.312L27.389.812c.703-.579 1.49-.703 2.19-.812zm-3.13 9.935L7.297 27.994l19.153 18.84v-7.342c-.002-1.244.856-2.442 2.034-2.844 14.307-4.882 27.323-1.394 35.145 6.437 3.985 3.989 6.581 9.143 7.355 14.715 2.14-6.959 1.157-13.902-2.441-19.964-5.89-9.92-19.251-17.684-39.089-17.684-1.573 0-3.004-1.429-3.004-3V9.936z"
+                              fill-rule="nonzero" />
+                      </svg>
+                  </button>
+                  <button class="inline-flex items-center ml-2 flex-column">
+                      <svg class="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-700" fill="none"
+                          stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5">
+                          </path>
+                      </svg>
+                  </button>
+                  <div class="ml-2 text-gray-400 text-xs">These dont work yet</div>
+                </div>
+              </div>
+            <% end %>
           </div>
-        </form>
+
+        </div>
+
       </div>
     </div>
-  </div>
-
-  <div class="hidden">
-
-    <div class="flex flex-col appearance-none rounded-lg p-4 m-2 cursor-pointer bg-white">
-      <div class="text-gray-800 whitespace-nowrap">
-        <div class=""><%= @property.street_number %></div>
-        <div class=""><%= @property.route %></div>
-      </div>
-      <div class="flex text-gray-800 whitespace-nowrap">
-        <div class=""><%= @property.locality %>, <%= @property.administrative_area_level_1_short %></div>
-      </div>
-      <div class="text-gray-800"><%= @property.postal_code %></div>
-    </div>
-
-
-
-
-
-
-
-
   </div>
 
 </div>
