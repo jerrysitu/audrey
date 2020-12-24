@@ -58,6 +58,24 @@ defmodule AudreyWeb.PropertyLive.Show do
     {:noreply, push_event(socket, "new_sighting", %{sighting: random_sighting})}
   end
 
+  def handle_event(
+        "new-like",
+        %{"comment-id" => comment_id, "property-id" => property_id} = params,
+        socket
+      ) do
+    IO.inspect(params, label: "Paramssss")
+
+    property_comment = Audrey.Location.get_property_comment!(comment_id)
+
+    Audrey.Location.update_property_comment(property_comment, %{likes: property_comment.likes + 1})
+
+    property_comments = Audrey.Location.list_property_comments_by_property_id(property_id)
+
+    {:noreply,
+     socket
+     |> assign(property_comments: property_comments)}
+  end
+
   defp generate_random_sighting() do
     # https://developers.google.com/maps/documentation/javascript/reference/coordinates
     # Latitude ranges between -90 and 90 degrees, inclusive.

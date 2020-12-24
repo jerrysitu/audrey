@@ -5,6 +5,7 @@ defmodule Audrey.Location.PropertyComment do
   schema "property_comments" do
     field :property_id, :integer
     field :comment, :string
+    field :likes, :integer
 
     timestamps()
   end
@@ -14,6 +15,7 @@ defmodule Audrey.Location.PropertyComment do
     |> cast(attrs, [
       :property_id,
       :comment,
+      :likes,
       :inserted_at
     ])
   end
