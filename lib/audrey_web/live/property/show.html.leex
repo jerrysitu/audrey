@@ -1,5 +1,5 @@
 <div class="flex max-h-(screen-16)">
-  <div class="w-1/2 flex flex-col relative">
+  <div class="w-1/2 h-screen-16 flex flex-col relative">
     <div class="h-1/2">
       <div class="bg-red-200 h-4/6">Some photos here</div>
       <div class="h-2/6 bg-violet-200">
@@ -62,9 +62,14 @@
               </form>
             </div>
           </div>
+        </div>
 
+        <div class="">
+          <div class="float-right mt-4 text-gray-800 text-xl"><%= length(@property_comments) %> review</div>
+        </div>
 
-
+        <div class="mt-4 <%= unless length(@property_comments) == 0, do: "hidden" %>">
+          <div class="text-2xl text-gray-800">Be the first to review this property!</div>
         </div>
 
         <div class="">
