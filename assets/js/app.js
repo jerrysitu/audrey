@@ -22,7 +22,7 @@ let Hooks = {};
 
 Hooks.MapSightingsHandler = {
   mounted() {
-    console.log("MapSightingsHandler!!!");
+    console.log("MapSightingsHandler");
     const handleNewSightingFunction = ({ sighting }) => {
       var markerPosition = { lat: sighting.latitude, lng: sighting.longitude };
 

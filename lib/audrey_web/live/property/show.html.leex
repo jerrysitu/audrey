@@ -1,5 +1,5 @@
 <div class="flex max-h-(screen-16)">
-  <div class="w-1/2 h-screen-16 flex flex-col relative">
+  <div class="w-1/2 h-screen-16 flex-col relative hidden sm:flex">
     <div class="h-1/2">
       <div class="bg-red-200 h-4/6">Some photos here</div>
       <div class="h-2/6 bg-violet-200">
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="w-1/2 overflow-y-scroll">
+  <div class="sm:w-1/2 w-full overflow-y-scroll">
     <div class="p-4">
       <div class="flex flex-col">
         <div class="flex flex-col">
@@ -50,22 +50,22 @@
                 %>
               </div>
 
-              <div class="flex w-full mt-2">
+              <div class="flex flex-col md:flex-row w-full mt-2">
                 <%=
                   text_input :property_comment, :comment,
-                  class: "w-5/6 input-field",
+                  class: "w-full input-field md:w-5/6",
                   autocomplete: "off",
                   required: true
                 %>
 
-                <button type="submit" class="w-1/6 ml-2 btn btn-emerald h-10">Submit</button>
+                <button type="submit" class="md:w-1/6 w-full mt-2 md:m-0 md:ml-2 text-base md:text-xs lg:text-base btn btn-emerald h-10">Submit</button>
               </form>
             </div>
           </div>
         </div>
 
         <div class="">
-          <div class="float-right mt-4 text-gray-800 text-xl"><%= length(@property_comments) %> review</div>
+          <div class="float-right mt-4 text-gray-800 text-xl"><%= length(@property_comments) %> reviews</div>
         </div>
 
         <div class="mt-4 <%= unless length(@property_comments) == 0, do: "hidden" %>">
@@ -75,9 +75,11 @@
         <div class="">
           <%= for comment <- @property_comments do %>
             <div class="flex flex-col p-4 my-3 rounded-md shadow-md bg-white border-2 border-gray-300">
-              <div class="flex items-baseline">
+              <div class="flex flex-col items-baseline">
                 <div class="font-semibold">Anonymous</div>
-                <div class="ml-2 text-xs text-gray-500"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %> (<%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{relative}", :relative) %>)</div>
+                <div class="text-xs text-gray-500">
+                  <%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{WDshort}, {Mshort} {0D}, {YYYY}, {h12}:{m}:{s}{am}") %> (<%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{relative}", :relative) %>)
+                </div>
               </div>
 
               <div class="text-gray-700"><%= comment.comment %></div>

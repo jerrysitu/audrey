@@ -17,16 +17,16 @@
           <a href="<%= Routes.page_path(@conn, :index) %>" class="font-medium hover:text-gray-900">AudreyApp</a>
           <%= if Application.get_env(:audrey, :env) == :dev do %>
             <div class="ml-4">
-              <div class="sm:hidden md:hidden lg:hidden">Md: Default</div>
-              <div class="hidden sm:block md:hidden lg:hidden">Md: Small</div>
-              <div class="hidden sm:hidden md:block lg:hidden">Md: Medium</div>
-              <div class="hidden sm:hidden md:hidden lg:block">Md: Large</div>
+              <div class="sm:hidden md:hidden lg:hidden">Default</div>
+              <div class="hidden sm:block md:hidden lg:hidden">Small</div>
+              <div class="hidden sm:hidden md:block lg:hidden">Medium</div>
+              <div class="hidden sm:hidden md:hidden lg:block">Large</div>
             </div>
             <% end %>
         </nav>
-        <div class="items-center h-full justify-self-end">
+        <div class="items-center h-full justify-self-end mr-2">
           <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green whitespace-nowrap">Setup New Property</a>
+            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green whitespace-nowrap">New Property</a>
           <% end %>
         </div>
       </div>
