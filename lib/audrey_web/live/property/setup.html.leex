@@ -1,4 +1,4 @@
-<div class="flex flex-col mx-auto max-h-screen mt-20">
+<div class="flex flex-col mx-auto max-h-screen mt-12">
 
   <div class="mx-2 sm:mx-auto <%= unless @user_type == "", do: "hidden" %>">
     <div class="text-2xl text-center">I'm a...</div>
@@ -21,7 +21,7 @@
               autocomplete: "off",
               required: true
           %>
-          <div class="text-sm text-gray-500">
+          <div class="text-xs text-gray-500">
             Street Address
           </div>
         </div>
@@ -35,7 +35,7 @@
                 autocomplete: "off",
                 required: true
             %>
-            <div class="text-sm text-gray-500">
+            <div class="text-xs text-gray-500">
               City
             </div>
           </div>
@@ -48,7 +48,7 @@
                 autocomplete: "off",
                 required: true
             %>
-            <div class="text-sm text-gray-500">
+            <div class="text-xs text-gray-500">
               State / Province
             </div>
           </div>
@@ -62,7 +62,7 @@
                 placeholder: "V6B 2J1",
                 autocomplete: "off"
             %>
-            <div class="text-sm text-gray-500">
+            <div class="text-xs text-gray-500">
               Zip Code / Postal Code
             </div>
           </div>
@@ -75,7 +75,7 @@
                 autocomplete: "off",
                 required: true
             %>
-            <div class="text-sm text-gray-500">
+            <div class="text-xs text-gray-500">
               Country
             </div>
           </div>

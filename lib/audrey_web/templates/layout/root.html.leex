@@ -12,7 +12,7 @@
   </head>
   <body class="antialiased">
     <header class="text-gray-700 border-t shadow-md border-gray-100 bg-white body-font h-16 z-50 top-0 sticky">
-      <div class="container max-w-full mx-auto flex justify-between items-center p-5 md:flex-row">
+      <div class="max-w-full mx-auto flex justify-between items-center p-5 md:flex-row">
         <nav class="flex flex-wrap items-center text-base">
           <a href="<%= Routes.page_path(@conn, :index) %>" class="font-medium hover:text-gray-900">AudreyApp</a>
           <%= if Application.get_env(:audrey, :env) == :dev do %>
@@ -24,7 +24,7 @@
             </div>
             <% end %>
         </nav>
-        <div class="items-center h-full justify-self-end mr-2">
+        <div class="items-center h-full justify-self-end mr-1">
           <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
             <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green whitespace-nowrap">New Property</a>
           <% end %>
