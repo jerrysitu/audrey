@@ -15,16 +15,18 @@
       <div class="container max-w-full mx-auto flex justify-between items-center p-5 md:flex-row">
         <nav class="flex flex-wrap items-center text-base">
           <a href="<%= Routes.page_path(@conn, :index) %>" class="font-medium hover:text-gray-900">AudreyApp</a>
-          <div class="ml-4">
-            <div class="sm:hidden md:hidden lg:hidden">Responsive: Default</div>
-            <div class="hidden sm:block md:hidden lg:hidden">Responsive: Small</div>
-            <div class="hidden sm:hidden md:block lg:hidden"">Responsive: Medium</div>
-            <div class="hidden sm:hidden md:hidden lg:block"">Responsive: Large</div>
-          </div>
+          <%= if Application.get_env(:audrey, :env) == :dev do %>
+            <div class="ml-4">
+              <div class="sm:hidden md:hidden lg:hidden">Md: Default</div>
+              <div class="hidden sm:block md:hidden lg:hidden">Md: Small</div>
+              <div class="hidden sm:hidden md:block lg:hidden">Md: Medium</div>
+              <div class="hidden sm:hidden md:hidden lg:block">Md: Large</div>
+            </div>
+            <% end %>
         </nav>
         <div class="items-center h-full justify-self-end">
           <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green">Setup New Property</a>
+            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green whitespace-nowrap">Setup New Property</a>
           <% end %>
         </div>
       </div>
