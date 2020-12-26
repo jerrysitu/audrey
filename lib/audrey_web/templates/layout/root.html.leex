@@ -26,7 +26,7 @@
         </nav>
         <div class="items-center h-full justify-self-end mr-1">
           <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-green whitespace-nowrap">New Property</a>
+            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-emerald whitespace-nowrap">New Property</a>
           <% end %>
         </div>
       </div>

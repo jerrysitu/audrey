@@ -4,7 +4,7 @@
     <%= for property <- @properties do %>
       <div phx-click="property-redirect"
             phx-value-property-id="<%= property.id %>"
-            class="flex flex-col text-gray-600 font-medium appearance-none border-2 shadow rounded-lg p-4 my-2 cursor-pointer bg-white hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+            class="flex flex-col text-gray-600 font-semibold appearance-none border-2 shadow rounded-lg p-4 my-2 cursor-pointer bg-white hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105"
       >
         <div class="flex whitespace-nowrap">
           <div class=""><%= property.street_number %></div>

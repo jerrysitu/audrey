@@ -1,18 +1,16 @@
 <div class="flex flex-col mx-auto max-h-screen mt-12">
 
 
-
-
-
-
-
   <div class="mx-2 sm:mx-auto <%= unless @user_type == "", do: "hidden" %>">
     <div class="text-2xl text-center">I'm a...</div>
-    <div class="flex flex-col">
+    <div class="flex flex-col mt-2">
       <div phx-click="select-user-type" phx-value-type="tenant" class="btn btn-emerald sm:w-64">Tenant</div>
-      <div phx-click="select-user-type" phx-value-type="landlord" class="mt-2 btn btn-emerald sm:w-64">Landlord / Property Manager</div>
+      <div phx-click="select-user-type" phx-value-type="landlord" class="mt-4 btn btn-emerald sm:w-64">Landlord / Property Manager</div>
     </div>
-    <div phx-click="back-to-main" class="btn mx-auto btn-light-gray w-24 mt-4">Back</div>
+    <button phx-click="back-to-main" class="flex mt-4 items-center btn btn-white mx-auto">
+      <svg class="h-5 w-5" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h24v24H0z" fill="none"></path><path xmlns="http://www.w3.org/2000/svg" d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"></path></svg>
+      <div class="ml-1">Back</div>
+    </button>
 
   </div>
 
@@ -95,9 +93,13 @@
           required: true
         %>
 
-        <div class="flex justify-end">
-          <div phx-click="select-user-type" phx-value-type="" class="btn btn-light-gray w-24 mt-2">Back</div>
-          <button type="submit" class="btn btn-emerald w-24 mt-2 ml-2">Submit</button>
+        <div class="flex justify-end mt-2">
+          <button phx-click="select-user-type" phx-value-type="" class="flex items-center btn btn-white">
+            <svg class="h-5 w-5" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h24v24H0z" fill="none"></path><path xmlns="http://www.w3.org/2000/svg" d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"></path></svg>
+            <div class="ml-1">Back</div>
+          </button>
+          <button type="submit" class="btn btn-emerald ml-2">Submit</button>
+
         </div>
       </form>
     </div>
