@@ -1,54 +1,60 @@
-<div class="flex flex-col sm:flex-row max-h-(screen-16)">
-  <div class="static flex flex-col w-full sm:w-1/2 h-screen-16 sm:relative">
-    <div class="sm:h-1/2">
-      <div class="h-full p-4">
-        <div class="flex flex-wrap text-lg font-semibold text-gray-800">
-          <div class="<%= if Map.get(@property,:neighborhood, nil) == nil, do: "hidden" %>">
-            <div class="whitespace-nowrap"><%= Map.get(@property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
-          </div>
-          <div class="whitespace-nowrap">
-            <div class=""><%= Map.get(@property, :street_number, "") %> <%= Map.get(@property, :route_short, "") %>,&nbsp;</div>
-          </div>
-          <div class=""><%= Map.get(@property, :locality, "") %>,&nbsp;</div>
-          <div class=""><%= Map.get(@property, :administrative_area_level_1_short, "") %>&nbsp;</div>
-          <div class=""><%= Map.get(@property, :postal_code, "") %></div>
-        </div>
-        <div class="">
-          <div class="flex">
-            <div class=""><%= @property.square_footage %></div>
-            <div class="ml-1">Square Feet</div>
-          </div>
-          <div class="flex">
-            <div class=""><%= @property.bedrooms %></div>
-            <div class="ml-1">Bedrooms</div>
-          </div>
-          <div class="flex">
-            <div class=""><%= @property.washrooms %></div>
-            <div class="ml-1">Washrooms</div>
-          </div>
-        </div>
-        <div class="mt-2 <%= if length(@available_amenities) == 0, do: "hidden" %>">
-          <div class="text-lg font-semibold text-gray-800">Amenities</div>
-            <div class="flex flex-wrap">
-              <%= for amenity <- @available_amenities do %>
-                <div class="p-1 m-1 border border-gray-400 rounded-md"><%= amenity %></div>
-              <% end %>
-          </div>
+<div class="flex flex-col sm:flex-row sm:max-h-(screen-16)">
 
+  <!-- Left half (Full: SM) -->
+  <div class="flex flex-col w-full sm:w-1/2 sm:h-screen-16 sm:relative">
+
+    <div class="z-50 flex flex-col h-full p-4 sm:h-screen-1/2">
+      <!-- Property Address -->
+      <div class="flex flex-wrap text-lg font-semibold text-gray-800">
+        <div class="<%= if Map.get(@property,:neighborhood, nil) == nil, do: "hidden" %>">
+          <div class="whitespace-nowrap"><%= Map.get(@property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
+        </div>
+        <div class="whitespace-nowrap">
+          <div class=""><%= Map.get(@property, :street_number, "") %> <%= Map.get(@property, :route_short, "") %>,&nbsp;</div>
+        </div>
+        <div class=""><%= Map.get(@property, :locality, "") %>,&nbsp;</div>
+        <div class=""><%= Map.get(@property, :administrative_area_level_1_short, "") %>&nbsp;</div>
+        <div class=""><%= Map.get(@property, :postal_code, "") %></div>
+      </div>
+      <!-- Property Info -->
+      <div class="">
+        <div class="flex">
+          <div class=""><%= @property.square_footage %></div>
+          <div class="ml-1">Square Feet</div>
+        </div>
+        <div class="flex">
+          <div class=""><%= @property.bedrooms %></div>
+          <div class="ml-1">Bedrooms</div>
+        </div>
+        <div class="flex">
+          <div class=""><%= @property.washrooms %></div>
+          <div class="ml-1">Washrooms</div>
+        </div>
+      </div>
+      <!-- Amenities section -->
+      <div class="mt-4">
+        <div class="text-lg font-semibold text-gray-800">Amenities</div>
+        <div class="flex flex-wrap">
+          <%= for amenity <- @available_amenities do %>
+            <div class="p-1 m-1 border border-gray-400 rounded-md"><%= amenity %></div>
+          <% end %>
         </div>
       </div>
 
     </div>
 
-
-    <div class="inline-block p-4 sm:h-screen-1/2 sm:block">
+    <!-- Map -->
+    <div class="p-4">
       <section class="z-10" phx-update="ignore" phx-hook="MapSightingsHandler" id="mapsighting">
-        <div id="map" class="w-full rounded-md shadow-md h-screen-1/2"></div>
+        <div id="map" class="w-full rounded-md shadow-md h-screen-1/2 sm:h-screen-1/2-4rem"></div>
       </section>
     </div>
+
+
   </div>
 
-  <div class="w-full mt-20 overflow-y-visible sm:mt-0 sm:w-1/2 sm:overflow-y-scroll">
+  <!-- Right half (Full: SM) -->
+  <div class="w-full overflow-y-visible sm:mt-0 sm:w-1/2 sm:overflow-y-scroll">
     <div class="p-4">
       <div class="flex flex-col">
         <div class="flex flex-col">
@@ -115,17 +121,15 @@
                       <svg class="w-5 h-5 p-1 text-white rounded-full bg-emerald-600" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h24v24H0V0z" fill="none"></path><path xmlns="http://www.w3.org/2000/svg" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"></path></svg>
                       <div class="ml-1 text-sm font-semibold text-gray-500"><%= comment.likes %></div>
                   </div>
-
                 </div>
               </div>
             </div>
           <% end %>
         </div>
-
       </div>
-
     </div>
   </div>
+
 </div>
 
 
