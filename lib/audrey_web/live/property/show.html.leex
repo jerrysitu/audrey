@@ -1,9 +1,9 @@
 <div class="flex flex-col sm:flex-row max-h-(screen-16)">
-  <div class="w-full sm:w-1/2 h-screen-16 flex-col static sm:relative flex">
+  <div class="static flex flex-col w-full sm:w-1/2 h-screen-16 sm:relative">
     <div class="sm:h-1/2">
       <div class="h-full p-4">
-        <div class="flex flex-wrap font-semibold text-gray-800">
-          <div class="<%= if Map.get(@property,:neighborhood, "") == "", do: "hidden" %>">
+        <div class="flex flex-wrap text-lg font-semibold text-gray-800">
+          <div class="<%= if Map.get(@property,:neighborhood, nil) == nil, do: "hidden" %>">
             <div class="whitespace-nowrap"><%= Map.get(@property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
           </div>
           <div class="whitespace-nowrap">
@@ -13,19 +13,42 @@
           <div class=""><%= Map.get(@property, :administrative_area_level_1_short, "") %>&nbsp;</div>
           <div class=""><%= Map.get(@property, :postal_code, "") %></div>
         </div>
+        <div class="">
+          <div class="flex">
+            <div class=""><%= @property.square_footage %></div>
+            <div class="ml-1">Square Feet</div>
+          </div>
+          <div class="flex">
+            <div class=""><%= @property.bedrooms %></div>
+            <div class="ml-1">Bedrooms</div>
+          </div>
+          <div class="flex">
+            <div class=""><%= @property.washrooms %></div>
+            <div class="ml-1">Washrooms</div>
+          </div>
+        </div>
+        <div class="mt-2 <%= if length(@available_amenities) == 0, do: "hidden" %>">
+          <div class="text-lg font-semibold text-gray-800">Amenities</div>
+            <div class="flex flex-wrap">
+              <%= for amenity <- @available_amenities do %>
+                <div class="p-1 m-1 border border-gray-400 rounded-md"><%= amenity %></div>
+              <% end %>
+          </div>
+
+        </div>
       </div>
 
     </div>
 
 
-    <div class="sm:h-screen-1/2 sm:block p-4">
+    <div class="inline-block p-4 sm:h-screen-1/2 sm:block">
       <section class="z-10" phx-update="ignore" phx-hook="MapSightingsHandler" id="mapsighting">
-        <div id="map" class="h-screen-1/2 w-full rounded-md shadow-md"></div>
+        <div id="map" class="w-full rounded-md shadow-md h-screen-1/2"></div>
       </section>
     </div>
   </div>
 
-  <div class="sm:w-1/2 w-full overflow-y-visible sm:overflow-y-scroll">
+  <div class="w-full mt-20 overflow-y-visible sm:mt-0 sm:w-1/2 sm:overflow-y-scroll">
     <div class="p-4">
       <div class="flex flex-col">
         <div class="flex flex-col">
@@ -47,7 +70,7 @@
                 %>
               </div>
 
-              <div class="flex flex-col md:flex-row w-full mt-2">
+              <div class="flex flex-col w-full mt-2 md:flex-row">
                 <%=
                   text_input :property_comment, :comment,
                   class: "w-full input-field md:w-5/6",
@@ -55,14 +78,14 @@
                   required: true
                 %>
 
-                <button type="submit" class="md:w-1/6 w-full mt-2 md:m-0 md:ml-2 text-base md:text-xs lg:text-base btn btn-emerald h-10">Submit</button>
+                <button type="submit" class="w-full h-10 mt-2 text-base md:w-1/6 md:m-0 md:ml-2 md:text-xs lg:text-base btn btn-emerald">Submit</button>
               </form>
             </div>
           </div>
         </div>
 
         <div class="">
-          <div class="float-right mt-4 text-gray-800 text-xl"><%= length(@property_comments) %> reviews</div>
+          <div class="float-right mt-4 text-xl text-gray-800"><%= length(@property_comments) %> reviews</div>
         </div>
 
         <div class="mt-4 <%= unless length(@property_comments) == 0, do: "hidden" %>">
@@ -71,26 +94,26 @@
 
         <div class="">
           <%= for comment <- @property_comments do %>
-            <div class="flex flex-col p-4 my-3 rounded-md shadow-md bg-white border-2 border-gray-300">
+            <div class="flex flex-col p-4 my-3 bg-white border-2 border-gray-300 rounded-md shadow-md">
               <div class="flex flex-col items-baseline">
                 <div class="font-semibold text-gray-800">Anonymous</div>
               </div>
 
-              <div class="text-gray-700 mt-1"><%= comment.comment %></div>
+              <div class="mt-1 text-gray-700"><%= comment.comment %></div>
 
-              <div class="flex mt-2 items-baseline text-sm">
+              <div class="flex items-baseline mt-2 text-sm">
                 <div class="font-semibold text-gray-400"><%= comment.inserted_at |> Timex.to_datetime("America/Vancouver") |> Timex.format!("{relative}", :relative) %></div>
                 <div class="flex items-center">
-                  <div class="ml-2 flex items-center">
+                  <div class="flex items-center ml-2">
                     <div class="text-gray-400">-</div>
                   </div>
                   <div class="ml-2 font-semibold text-gray-500 cursor-pointer" phx-click="new-like" phx-value-property-id="<%= @property.id %>" phx-value-comment-id="<%= comment.id %>">Like</div>
-                  <div class="ml-2 flex items-center">
+                  <div class="flex items-center ml-2">
                     <div class="text-gray-400">-</div>
                   </div>
-                  <div class="flex items-center ml-2 flex-column cursor-default">
-                      <svg class="h-5 w-5 text-white bg-emerald-600 rounded-full p-1" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h24v24H0V0z" fill="none"></path><path xmlns="http://www.w3.org/2000/svg" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"></path></svg>
-                      <div class="ml-1 text-gray-500 text-sm font-semibold"><%= comment.likes %></div>
+                  <div class="flex items-center ml-2 cursor-default flex-column">
+                      <svg class="w-5 h-5 p-1 text-white rounded-full bg-emerald-600" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" d="M0 0h24v24H0V0z" fill="none"></path><path xmlns="http://www.w3.org/2000/svg" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"></path></svg>
+                      <div class="ml-1 text-sm font-semibold text-gray-500"><%= comment.likes %></div>
                   </div>
 
                 </div>

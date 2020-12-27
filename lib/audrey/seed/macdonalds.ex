@@ -525,6 +525,17 @@ defmodule Audrey.Seed.MacDonalds do
 
       Audrey.GoogleMaps.parse_geo_code_response(geocode_response)
       |> Map.put(:user_type, "landlord")
+      |> Map.put(:wifi, true)
+      |> Map.put(:heating, true)
+      |> Map.put(:air_conditioning, true)
+      |> Map.put(:smoke_alarms, true)
+      |> Map.put(:oven, true)
+      |> Map.put(:stove, true)
+      |> Map.put(:refrigerator, true)
+      |> Map.put(:dish_washer, true)
+      |> Map.put(:microwave, true)
+      |> Map.put(:washrooms, 2)
+      |> Map.put(:square_footage, Enum.random(1000..2000))
       |> Audrey.Location.create_property()
     end)
   end

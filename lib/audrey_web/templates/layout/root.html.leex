@@ -11,24 +11,20 @@
 
   </head>
   <body class="antialiased">
-    <header class="text-gray-700 border-t shadow-md border-gray-100 bg-white body-font h-16 z-50 sm:sticky sm:top-0">
-      <div class="max-w-full mx-auto flex justify-between items-center p-5 md:flex-row">
-        <nav class="flex flex-wrap items-center text-base">
-          <a href="<%= Routes.page_path(@conn, :index) %>" class="font-medium hover:text-gray-900">AudreyApp</a>
-          <%= if Application.get_env(:audrey, :env) == :dev do %>
-            <div class="ml-4">
-              <div class="sm:hidden md:hidden lg:hidden">Default</div>
-              <div class="hidden sm:block md:hidden lg:hidden">Small</div>
-              <div class="hidden sm:hidden md:block lg:hidden">Medium</div>
-              <div class="hidden sm:hidden md:hidden lg:block">Large</div>
-            </div>
-            <% end %>
-        </nav>
-        <div class="items-center h-full justify-self-end mr-1">
-          <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-            <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-emerald whitespace-nowrap">New Property</a>
-          <% end %>
+    <header class="sticky top-0 z-50 flex items-center justify-between h-16 text-gray-700 bg-white border-t border-gray-100 shadow-md">
+      <a href="<%= Routes.page_path(@conn, :index) %>" class="ml-4 font-medium hover:text-gray-900">AudreyApp</a>
+      <%= if Application.get_env(:audrey, :env) == :dev do %>
+        <div class="hidden ml-4">
+          <div class="sm:hidden md:hidden lg:hidden">Default</div>
+          <div class="hidden sm:block md:hidden lg:hidden">Small</div>
+          <div class="hidden sm:hidden md:block lg:hidden">Medium</div>
+          <div class="hidden sm:hidden md:hidden lg:block">Large</div>
         </div>
+      <% end %>
+      <div class="mr-4">
+        <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
+          <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-emerald whitespace-nowrap">New Property</a>
+        <% end %>
       </div>
     </header>
     <%= @inner_content %>

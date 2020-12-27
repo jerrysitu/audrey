@@ -10,12 +10,25 @@ defmodule AudreyWeb.PropertyLive.Show do
   def handle_params(%{"id" => property_id} = _params, _session, socket) do
     property = Audrey.Location.get_property!(property_id) |> IO.inspect(label: "property")
 
+    available_amenities =
+      property
+      |> Map.to_list()
+      |> Enum.filter(fn {k, _v} ->
+        Enum.any?(Audrey.Location.Property.get_amenities(), fn x -> k == x end)
+      end)
+      |> Enum.filter(fn {_k, v} ->
+        v == true
+      end)
+      |> Enum.map(fn {k, _v} -> k |> Atom.to_string() end)
+      |> IO.inspect(label: "amenitiesssss")
+
     property_comments = Audrey.Location.list_property_comments_by_property_id(property_id)
 
     {
       :noreply,
       socket
       |> assign(property_comments: property_comments)
+      |> assign(available_amenities: available_amenities)
       |> assign(property: property)
     }
   end
