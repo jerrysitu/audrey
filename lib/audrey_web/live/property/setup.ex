@@ -82,10 +82,6 @@ defmodule AudreyWeb.PropertyLive.Setup do
       |> Map.merge(property)
       |> IO.inspect(label: "paramsssss")
 
-    changeset =
-      Audrey.Location.Property.changeset(%Audrey.Location.Property{}, params)
-      |> IO.inspect(label: "Changesettttt")
-
     case Audrey.Location.create_property(params) do
       {:ok, property} ->
         {:noreply,
@@ -96,13 +92,27 @@ defmodule AudreyWeb.PropertyLive.Setup do
       {:error, %Ecto.Changeset{} = changeset} ->
         IO.inspect(changeset, label: "error changesetttt")
 
-        {:noreply,
-         socket
-         |> assign(changeset: changeset)
-         |> put_flash(
-           :error,
-           "Something went wrong, please see errors."
-         )}
+        error_keys = Enum.map(changeset.errors, fn {key, _value} -> key end)
+
+        cond do
+          Enum.any?(error_keys, fn x -> x == :google_maps_place_id end) ->
+            {:noreply,
+             socket
+             |> assign(changeset: changeset)
+             |> put_flash(
+               :error,
+               "Property already exists."
+             )}
+
+          true ->
+            {:noreply,
+             socket
+             |> assign(changeset: changeset)
+             |> put_flash(
+               :error,
+               "Something went wrong, please see errors."
+             )}
+        end
     end
 
     # with {:ok, property} <-
