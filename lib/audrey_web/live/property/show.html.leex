@@ -3,7 +3,7 @@
   <!-- Left half (Full: SM) -->
   <div class="flex flex-col w-full sm:w-1/2 sm:h-screen-16 sm:relative">
 
-    <div class="z-50 flex flex-col h-full p-4 sm:h-screen-1/2">
+    <div class="z-10 flex flex-col h-full p-4 sm:h-screen-1/2">
       <!-- Property Address -->
       <div class="flex flex-wrap text-lg font-semibold text-gray-800">
         <div class="<%= if Map.get(@property,:neighborhood, nil) == nil, do: "hidden" %>">
@@ -19,8 +19,17 @@
       <!-- Property Info -->
       <div class="">
         <div class="flex">
+          <div class="p-1 my-1 font-bold bg-blue-500 rounded text-blue-50">
+            <div class="capitalize whitespace-nowrap"><%= @property.property_type %>&nbsp;for&nbsp;<%= @property.sale_or_rent %></div>
+          </div>
+        </div>
+        <div class="flex">
           <div class=""><%= @property.square_footage %></div>
           <div class="ml-1">Square Feet</div>
+        </div>
+        <div class="flex">
+          <div class="">$<%= @property.monthly_rent %></div>
+          <div class="ml-1">monthly</div>
         </div>
         <div class="flex">
           <div class=""><%= @property.bedrooms %></div>
@@ -32,13 +41,18 @@
         </div>
       </div>
       <!-- Amenities section -->
-      <div class="mt-4">
-        <div class="text-lg font-semibold text-gray-800">Amenities</div>
+      <div class="mt-2">
         <div class="flex flex-wrap">
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.air_conditioning_type %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.heating_type %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.laundry_type %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.parking %></div>
           <%= for amenity <- @available_amenities do %>
-            <div class="p-1 m-1 border border-gray-400 rounded-md"><%= amenity %></div>
+            <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= amenity %></div>
           <% end %>
         </div>
+
+
       </div>
 
     </div>

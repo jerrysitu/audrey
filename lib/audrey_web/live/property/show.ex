@@ -8,7 +8,9 @@ defmodule AudreyWeb.PropertyLive.Show do
 
   @impl true
   def handle_params(%{"id" => property_id} = _params, _session, socket) do
-    property = Audrey.Location.get_property!(property_id) |> IO.inspect(label: "property")
+    property =
+      Audrey.Location.get_property!(property_id)
+      |> IO.inspect(label: "propertyyyyy", limit: :infinity)
 
     available_amenities =
       property

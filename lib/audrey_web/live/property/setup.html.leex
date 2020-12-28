@@ -1,6 +1,5 @@
 <div class="flex flex-col max-h-screen mx-auto mt-6">
 
-
   <div class="mx-2 sm:mx-auto <%= unless @user_type == "", do: "hidden" %>">
     <div class="text-2xl text-center">I'm a...</div>
     <div class="flex flex-col mt-2">
@@ -19,7 +18,7 @@
         <div class="">
           <div class="text-2xl text-bold">Address</div>
           <div class="mt-2">
-            <div id="locationField">
+            <div id="locationField" class="z-10">
               <input
                 id="autocomplete"
                 placeholder="Enter your address"
@@ -30,7 +29,7 @@
             </div>
           </div>
 
-          <%= f = form_for @changeset, "#", [phx_submit: "save-property"] %>
+          <%= f = form_for @changeset, "#", [phx_submit: "save-property", phx_change: "update-property"] %>
           <div class="hidden">
             <div class="flex mt-2">
               <div class="w-1/2">
@@ -109,11 +108,32 @@
 
         </div>
 
-        <div class="mt-6">
+        <div class="mt-8">
           <div class="text-2xl text-bold">Property Information</div>
 
           <div class="mt-2">
-            <div class="text-xs">Square Footage</div>
+            <%= select(f, :property_type, [{"Property Type", ""}, {"Apartment", "apartment"}, {"House", "house"}, {"Room Only", "room_only"}, {"Townhouse", "townhouse"}, {"Condo", "condo"}, {"Duplex", "duplex"}, {"Loft", "loft"}, {"Land", "Land"}, {"Flat", "flat"}, {"Cottage or Cabin", "cottage_or_cabin"}], class: "select-field w-full", required: true) %>
+            <%= select(f, :sale_or_rent, [{"Rent or Sale", ""}, {"Rent", "rent"}, {"Sales", "sale"}], class: "select-field w-full mt-4", required: true) %>
+          </div>
+
+          <div class="<%= unless Map.get(@changeset.changes, :sale_or_rent, nil) == :rent, do: "hidden" %>">
+            <div class="px-1 text-sm transform translate-x-2 translate-y-2.5 bg-white w-max">Monthly Rent</div>
+            <% rent_required = if Map.get(@changeset.changes, :sale_or_rent, nil) == :rent do true else false end %>
+            <%=
+                text_input f, :monthly_rent,
+                class: "input-field w-full",
+                autocomplete: "off",
+                required: rent_required,
+                type: "number",
+                inputmode: "numeric",
+                pattern: "[0-9]*",
+                min: "1"
+            %>
+            <%= error_tag f, :monthly_rent %>
+          </div>
+
+          <div class="">
+            <div class="px-1 text-sm transform translate-x-2 translate-y-2.5 bg-white w-max">Square Footage</div>
             <%=
                 text_input f, :square_footage,
                 class: "input-field w-full",
@@ -128,8 +148,8 @@
           </div>
 
           <div class="">
-            <%= select(f, :bedrooms, Enum.map(0..20, fn x -> {"#{x} bedrooms", x} end) |> List.insert_at(0, {"Bedrooms", ""}), class: "select-field w-full mt-2", required: true) %>
-            <%= select(f, :washrooms, Enum.map(0..20, fn x -> {"#{x} washrooms", x} end) |> List.insert_at(0, {"Washrooms", ""}), class: "select-field w-full mt-2", required: true) %>
+            <%= select(f, :bedrooms, Enum.map(0..20, fn x -> {"#{x} bedrooms", x} end) |> List.insert_at(0, {"Bedrooms", ""}), class: "select-field w-full mt-4", required: true) %>
+            <%= select(f, :washrooms, Enum.map(0..20, fn x -> {"#{x} washrooms", x} end) |> List.insert_at(0, {"Washrooms", ""}), class: "select-field w-full mt-4", required: true) %>
           </div>
         </div>
 
@@ -141,88 +161,94 @@
           required: true
         %>
 
-        <div class="mt-6">
+        <div class="mt-8">
           <div class="text-2xl text-bold">Amenities</div>
-          <div class="flex flex-col">
-            <label class="flex items-center mt-2 cursor-pointer">
+          <div class="">
+            <%= select(f, :laundry_type, [{"Select Laundry", ""}, {"In-suite Laundry", "in_suite_laundry"}, {"Laundry in building", "in_building_laundry"}, {"Laundry available", "laundry_available"}, {"No Laundry", "none"}], class: "select-field w-full mt-2", required: true) %>
+            <%= select(f, :parking, [{"Select Parking", ""}, {"Attached Garage Parking", "attached_garage_parking"}, {"Detached Garage Parking", "detached_garage_parking"}, {"Street Parking", "street_parking"}, {"Off Street Parking", "off_street_parking"}, {"Parking Available", "parking_available"}, {"No Parking", "none"}], class: "select-field w-full mt-4", required: true) %>
+            <%= select(f, :air_conditioning_type, [{"Select Air Conditioning", ""}, {"Central A/C", "central_ac"}, {"A/C Available", "ac_available"}, {"No Laundry", "none"}], class: "select-field w-full mt-4", required: true) %>
+            <%= select(f, :heating_type, [{"Select Heating", ""}, {"Central Heating", "central_heating"}, {"Electric Heating", "electric_heating"}, {"Gas Heating", "gas_heating"}, {"Radiator Heating", "radiator_heating"}, {"Heating Available", "heating_available"}, {"No Heating", "none"}], class: "select-field w-full mt-4", required: true) %>
+          </div>
+          <div class="flex flex-col mt-4">
+            <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :wifi, class: "checkbox") %>
-              <span class="ml-2">wifi</span>
+              <span class="ml-2">Wifi</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :bathtub, class: "checkbox") %>
-              <span class="ml-2">bathtub</span>
+              <span class="ml-2">Bathtub</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :shower, class: "checkbox") %>
-              <span class="ml-2">shower</span>
+              <span class="ml-2">Shower</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :ethernet_connection, class: "checkbox") %>
-              <span class="ml-2">ethernet_connection</span>
-            </label>
-            <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :heating, class: "checkbox") %>
-              <span class="ml-2">heating</span>
-            </label>
-            <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :air_conditioning, class: "checkbox") %>
-              <span class="ml-2">air_conditioning</span>
+              <span class="ml-2">Ethernet Connection</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :smoke_alarms, class: "checkbox") %>
-              <span class="ml-2">smoke_alarms</span>
+              <span class="ml-2">Smoke Alarms</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :oven, class: "checkbox") %>
-              <span class="ml-2">oven</span>
+              <span class="ml-2">Oven</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :stove, class: "checkbox") %>
-              <span class="ml-2">stove</span>
+              <span class="ml-2">Stove</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :microwave, class: "checkbox") %>
-              <span class="ml-2">microwave</span>
+              <span class="ml-2">Microwave</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :dish_washer, class: "checkbox") %>
-              <span class="ml-2">dish_washer</span>
+              <span class="ml-2">Dishwasher</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :refrigerator, class: "checkbox") %>
-              <span class="ml-2">refrigerator</span>
-            </label>
-            <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :washing_machine, class: "checkbox") %>
-              <span class="ml-2">washing_machine</span>
-            </label>
-            <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :clothes_dryer, class: "checkbox") %>
-              <span class="ml-2">clothes_dryer</span>
+              <span class="ml-2">Refrigerator</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :patio_or_balcony, class: "checkbox") %>
-              <span class="ml-2">patio_or_balcony</span>
+              <span class="ml-2">Patio or Balcony</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :backyard, class: "checkbox") %>
-              <span class="ml-2">backyard</span>
+              <span class="ml-2">Backyard</span>
             </label>
             <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :parking_spot, class: "checkbox") %>
-              <span class="ml-2">parking_spot</span>
+              <%= checkbox(f, :furnished, class: "checkbox") %>
+              <span class="ml-2">Furnished</span>
             </label>
             <label class="flex items-center cursor-pointer">
-              <%= checkbox(f, :pets_allowed, class: "checkbox") %>
-              <span class="ml-2">pets_allowed</span>
+              <%= checkbox(f, :smoking, class: "checkbox") %>
+              <span class="ml-2">Smoking</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+              <%= checkbox(f, :ev_charging, class: "checkbox") %>
+              <span class="ml-2">EV Charging</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+              <%= checkbox(f, :dogs_ok, class: "checkbox") %>
+              <span class="ml-2">Dogs Allowed</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+              <%= checkbox(f, :cats_ok, class: "checkbox") %>
+              <span class="ml-2">Cats Allowed</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+              <%= checkbox(f, :wheelchair_accessible, class: "checkbox") %>
+              <span class="ml-2">Wheelchair Accessible</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :gym, class: "checkbox") %>
-              <span class="ml-2">gym</span>
+              <span class="ml-2">Gym</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <%= checkbox(f, :pool, class: "checkbox") %>
-              <span class="ml-2">pool</span>
+              <span class="ml-2">Pool</span>
             </label>
           </div>
         </div>

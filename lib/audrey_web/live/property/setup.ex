@@ -33,6 +33,18 @@ defmodule AudreyWeb.PropertyLive.Setup do
   end
 
   def handle_event(
+        "update-property",
+        %{
+          "property" => property
+        },
+        socket
+      ) do
+    changeset = Audrey.Location.Property.changeset(%Audrey.Location.Property{}, property)
+
+    {:noreply, socket |> assign(changeset: changeset)}
+  end
+
+  def handle_event(
         "save-property",
         %{
           "property" =>
