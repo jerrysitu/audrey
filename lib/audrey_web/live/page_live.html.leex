@@ -10,10 +10,35 @@
           <div class=""><%= property.street_number %></div>
           <div class="ml-1"><%= property.route %></div>
         </div>
-        <div class="flex whitespace-nowrap">
+        <div class="flex text-xs text-gray-400 whitespace-nowrap">
           <div class=""><%= property.locality %>, <%= property.administrative_area_level_1_short %></div>
         </div>
-        <div class=""><%= property.postal_code %></div>
+        <div class="inline-flex text-xs text-gray-500">
+          <div class="flex flex-col mx-auto">
+            <div class="mx-auto"><%= property.bedrooms %></div>
+            <%= if property.bedrooms == 1 do %>
+              <div class="">Bed</div>
+            <% else %>
+              <div class="">Beds</div>
+            <% end %>
+          </div>
+          <div class="flex flex-col mx-auto ml-2">
+            <div class="mx-auto"><%= property.washrooms %></div>
+            <%= if property.washrooms == 1 do %>
+              <div class="">Bath</div>
+            <% else %>
+              <div class="">Baths</div>
+            <% end %>
+          </div>
+          <div class="flex flex-col mx-auto ml-2">
+            <div class="mx-auto"><%= property.square_footage %></div>
+            <div class="">Sq Ft</div>
+          </div>
+          <div class="flex flex-col mx-auto ml-2">
+            <div class="mx-auto">$<%= property.monthly_rent %></div>
+            <div class="">Monthly</div>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
