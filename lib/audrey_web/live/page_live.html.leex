@@ -17,7 +17,7 @@
           <div class=""><%= property.locality %>, <%= property.administrative_area_level_1_short %></div>
         </div>
         <!-- Propery info section -->
-        <div class="inline-flex mt-2 text-xs text-gray-500">
+        <div class="inline-flex mt-3 text-xs text-gray-500">
           <div class="flex flex-col mx-auto">
             <div class="mx-auto"><%= property.bedrooms %></div>
             <%= if property.bedrooms == 1 do %>
@@ -35,11 +35,11 @@
             <% end %>
           </div>
           <div class="flex flex-col mx-auto ml-3">
-            <div class="mx-auto"><%= property.square_footage %></div>
+            <div class="mx-auto proportional-nums"><%= property.square_footage %></div>
             <div class="">Sq Ft</div>
           </div>
-          <div class="flex flex-col mx-auto ml-3">
-            <div class="mx-auto">$<%= property.monthly_rent %></div>
+          <div class="flex flex-col mx-auto ml-3 <%= if property.monthly_rent == nil, do: "hidden" %>">
+            <div class="mx-auto proportional-nums">$<%= property.monthly_rent %></div>
             <div class="">Monthly</div>
           </div>
         </div>

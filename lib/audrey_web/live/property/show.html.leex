@@ -5,7 +5,7 @@
 
     <div class="z-10 flex flex-col h-full p-4 sm:h-screen-1/2">
       <!-- Property Address -->
-      <div class="flex flex-col flex-wrap text-lg font-semibold text-gray-800">
+      <div class="flex flex-col flex-wrap text-lg font-semibold text-gray-700">
         <div class="flex flex-wrap">
           <div class="<%= if Map.get(@property,:neighborhood, nil) == nil, do: "hidden" %>">
             <div class="whitespace-nowrap"><%= Map.get(@property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
@@ -40,11 +40,11 @@
             <% end %>
           </div>
           <div class="flex flex-col mx-auto ml-4">
-            <div class="mx-auto"><%= @property.square_footage %></div>
+            <div class="mx-auto proportional-nums"><%= @property.square_footage %></div>
             <div class="">Sq Ft</div>
           </div>
-          <div class="flex flex-col mx-auto ml-4">
-            <div class="mx-auto">$<%= @property.monthly_rent %></div>
+          <div class="flex flex-col mx-auto ml-4 <%= if is_nil(@property.monthly_rent), do: "hidden" %>">
+            <div class="mx-auto proportional-nums">$<%= @property.monthly_rent %></div>
             <div class="">Monthly</div>
           </div>
         </div>
