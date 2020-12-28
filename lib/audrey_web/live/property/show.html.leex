@@ -31,22 +31,32 @@
           <div class="">$<%= @property.monthly_rent %></div>
           <div class="ml-1">monthly</div>
         </div>
-        <div class="flex">
-          <div class=""><%= @property.bedrooms %></div>
-          <div class="ml-1">Bedrooms</div>
+        <div class="flex items-center">
+          <svg class="w-6 h-6 text-gray-700" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" fill="none" d="M0 0h24v24H0z"></path><path xmlns="http://www.w3.org/2000/svg" d="M20 12c0-1.1-.9-2-2-2V7c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3c-1.1 0-2 .9-2 2v5h1.33L6 19h1l.67-2h8.67l.66 2h1l.67-2H20v-5zm-4-2h-3V7h3v3zM8 7h3v3H8V7zm-2 5h12v3H6v-3z"></path></svg>
+          <div class="ml-1"><%= @property.bedrooms %></div>
+          <%= if @property.bedrooms == 1 do %>
+            <div class="ml-1">Bedroom</div>
+          <% else  %>
+            <div class="ml-1">Bedrooms</div>
+          <% end %>
         </div>
-        <div class="flex">
-          <div class=""><%= @property.washrooms %></div>
-          <div class="ml-1">Washrooms</div>
+        <div class="flex items-center">
+          <svg class="w-5 h-5 text-gray-700" stroke="none" fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" data-attributes-set=",xmlns:xlink,xmlns,viewBox,preserveAspectRatio,xmlns:xlink,xmlns,viewBox,preserveAspectRatio"><path xmlns="http://www.w3.org/2000/svg" fill="none" d="M0 0h24v24H0z"></path><circle xmlns="http://www.w3.org/2000/svg" cx="7" cy="7" r="2"></circle><path xmlns="http://www.w3.org/2000/svg" d="M20 13V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.4 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.51l1.25-1.25a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.21-.43-.38-.69-.5A2.251 2.251 0 005 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2z"></path></svg>
+          <div class="ml-1"><%= @property.washrooms %></div>
+          <%= if @property.washrooms == 1 do %>
+            <div class="ml-1">Washroom</div>
+          <% else  %>
+            <div class="ml-1">Washrooms</div>
+          <% end %>
         </div>
       </div>
       <!-- Amenities section -->
       <div class="mt-2">
         <div class="flex flex-wrap">
-          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.air_conditioning_type %></div>
-          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.heating_type %></div>
-          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.laundry_type %></div>
-          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= @property.parking %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md <%= if @property.air_conditioning_type == :none, do: "hidden" %>"><%= @property.air_conditioning_type |> Property.convert_air_conditioning_type() %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md <%= if @property.heating_type == :none, do: "hidden" %>"><%= @property.heating_type |> Property.convert_heating_type() %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md <%= if @property.laundry_type == :none, do: "hidden" %>"><%= @property.laundry_type |> Property.convert_laundry_type() %></div>
+          <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md <%= if @property.parking == :none, do: "hidden" %>"><%= @property.parking |> Property.convert_parking() %></div>
           <%= for amenity <- @available_amenities do %>
             <div class="p-0.5 m-1 text-sm border border-gray-400 rounded-md"><%= amenity %></div>
           <% end %>

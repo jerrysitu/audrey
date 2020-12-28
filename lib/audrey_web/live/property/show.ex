@@ -1,4 +1,5 @@
 defmodule AudreyWeb.PropertyLive.Show do
+  alias Audrey.Location.Property
   use AudreyWeb, :live_view
 
   @impl true
@@ -21,7 +22,9 @@ defmodule AudreyWeb.PropertyLive.Show do
       |> Enum.filter(fn {_k, v} ->
         v == true
       end)
-      |> Enum.map(fn {k, _v} -> k |> Atom.to_string() end)
+      |> Enum.map(fn {key, _v} ->
+        Audrey.Location.Property.convert_amenity(key)
+      end)
       |> IO.inspect(label: "amenitiesssss")
 
     property_comments = Audrey.Location.list_property_comments_by_property_id(property_id)

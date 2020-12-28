@@ -59,6 +59,11 @@ defmodule Audrey.Location.Property do
     field :sublocality, :string
     field :sublocality_short, :string
 
+    field :square_footage, :integer, default: 0
+    field :bedrooms, :integer, default: 0
+    field :washrooms, :integer, default: 0
+    field :monthly_rent, :integer, default: nil
+
     field :wifi, :boolean, default: false
     field :bathtub, :boolean, default: false
     field :shower, :boolean, default: false
@@ -73,11 +78,6 @@ defmodule Audrey.Location.Property do
     field :backyard, :boolean, default: false
     field :gym, :boolean, default: false
     field :pool, :boolean, default: false
-    field :square_footage, :integer, default: 0
-    field :bedrooms, :integer, default: 0
-    field :washrooms, :integer, default: 0
-
-    field :monthly_rent, :integer, default: nil
     field :furnished, :boolean, default: false
     field :smoking, :boolean, default: false
     field :ev_charging, :boolean, default: false
@@ -199,4 +199,63 @@ defmodule Audrey.Location.Property do
   def get_amenities do
     @amenities
   end
+
+  def convert_sale_or_rent(:sale), do: "sale"
+  def convert_sale_or_rent(:rent), do: "rent"
+
+  def convert_laundry_type(:in_suite_laundry), do: "In-Suite Laundry"
+  def convert_laundry_type(:in_building_laundry), do: "In-building Laundry"
+  def convert_laundry_type(:laundry_available), do: "Laundry Available"
+  def convert_laundry_type(:none), do: "No Laundry"
+
+  def convert_parking(:attached_garage_parking), do: "Attached Garage Parking"
+  def convert_parking(:detached_garage_parking), do: "Detached Garage Parking"
+  def convert_parking(:street_parking), do: "Street Parking"
+  def convert_parking(:off_street_parking), do: "Off Street Parking"
+  def convert_parking(:parking_available), do: "Parking Available"
+  def convert_parking(:none), do: "No Parking"
+
+  def convert_property_type(:apartment), do: "Apartment"
+  def convert_property_type(:house), do: "House"
+  def convert_property_type(:room_only), do: "Room Only"
+  def convert_property_type(:townhouse), do: "Townhouse"
+  def convert_property_type(:condo), do: "Condo"
+  def convert_property_type(:duplex), do: "Duplex"
+  def convert_property_type(:loft), do: "Loft"
+  def convert_property_type(:land), do: "Land"
+  def convert_property_type(:flat), do: "Flat"
+  def convert_property_type(:cottage_or_cabin), do: "Cottage or Cabin"
+
+  def convert_air_conditioning_type(:central_ac), do: "Central A/C"
+  def convert_air_conditioning_type(:ac_available), do: "A/C Available"
+  def convert_air_conditioning_type(:none), do: "No A/C"
+
+  def convert_heating_type(:central_heating), do: "Central Heating"
+  def convert_heating_type(:electric_heating), do: "Electrical Heating"
+  def convert_heating_type(:gas_heating), do: "Gas Heating"
+  def convert_heating_type(:radiator_heating), do: "Radiator Heating"
+  def convert_heating_type(:heating_available), do: "Heating Available"
+  def convert_heating_type(:none), do: "No Heating"
+
+  def convert_amenity(:wifi), do: "Wi-Fi"
+  def convert_amenity(:bathtub), do: "Bathtub"
+  def convert_amenity(:shower), do: "Shower"
+  def convert_amenity(:ethernet_connection), do: "Ethernet Connection"
+  def convert_amenity(:smoke_alarms), do: "Smoke Alarms"
+  def convert_amenity(:oven), do: "Oven"
+  def convert_amenity(:stove), do: "Stove"
+  def convert_amenity(:microwave), do: "Microwave"
+  def convert_amenity(:dish_washer), do: "Dishwasher"
+  def convert_amenity(:refrigerator), do: "Refrigerator"
+  def convert_amenity(:patio_or_balcony), do: "Patio or Balcony"
+  def convert_amenity(:backyard), do: "Backyard"
+  def convert_amenity(:gym), do: "Gym"
+  def convert_amenity(:pool), do: "Pool"
+  def convert_amenity(:furnished), do: "Furnished"
+  def convert_amenity(:smoking), do: "Smoking Allowed"
+  def convert_amenity(:ev_charging), do: "EV Charging"
+  def convert_amenity(:dogs_ok), do: "Dogs allowed"
+  def convert_amenity(:cats_ok), do: "Cats allowed"
+  def convert_amenity(:wheelchair_accessible), do: "Wheelchair Accessible"
+  def convert_amenity(_), do: ""
 end
