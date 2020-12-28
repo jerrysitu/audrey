@@ -1,3 +1,10 @@
 iframe {
   display: none;
 }
+
+.test {
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  display: -webkit-flex;
+  display: flex;
+}
