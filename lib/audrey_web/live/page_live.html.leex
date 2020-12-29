@@ -4,9 +4,9 @@
     <%= for property <- @properties do %>
       <div phx-click="property-redirect"
            phx-value-property-id="<%= property.id %>"
-           class="my-2 text-sm font-semibold text-gray-600 bg-white rounded-lg shadow-lg appearance-none cursor-pointer h-max hover:shadow-md hover:bg-gray-50"
+           class="my-2 text-sm font-semibold text-gray-600 bg-white rounded-lg shadow-md appearance-none cursor-pointer h-max hover:shadow-lg hover:bg-gray-50"
       >
-        <%= img_tag(Routes.static_path(@socket, "/images/stock_house.jpg"), class: "object-cover rounded-t-lg z-10") %>
+        <%= img_tag(Routes.static_path(@socket, "/images/resized_stock_house.png"), class: "object-cover rounded-t-lg z-10") %>
         <div class="p-4 rounded-b-lg">
           <div class="flex flex-wrap">
             <div class="<%= if Map.get(property,:neighborhood, nil) == nil, do: "hidden" %>">
