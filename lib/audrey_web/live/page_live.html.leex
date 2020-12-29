@@ -4,43 +4,46 @@
     <%= for property <- @properties do %>
       <div phx-click="property-redirect"
            phx-value-property-id="<%= property.id %>"
-           class="p-4 my-2 text-sm font-semibold text-gray-600 bg-white border-2 rounded-lg shadow appearance-none cursor-pointer h-max hover:shadow-md hover:bg-gray-50"
+           class="my-2 text-sm font-semibold text-gray-600 bg-white rounded-lg shadow-lg appearance-none cursor-pointer h-max hover:shadow-md hover:bg-gray-50"
       >
-        <div class="flex flex-wrap">
-          <div class="<%= if Map.get(property,:neighborhood, nil) == nil, do: "hidden" %>">
-            <div class="whitespace-nowrap"><%= Map.get(property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
+        <%= img_tag(Routes.static_path(@socket, "/images/stock_house.jpg"), class: "object-cover rounded-t-lg z-10") %>
+        <div class="p-4 rounded-b-lg">
+          <div class="flex flex-wrap">
+            <div class="<%= if Map.get(property,:neighborhood, nil) == nil, do: "hidden" %>">
+              <div class="whitespace-nowrap"><%= Map.get(property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
+            </div>
+            <div class=""><%= property.street_number %>&nbsp;</div>
+            <div class=""><%= property.route_short %></div>
           </div>
-          <div class=""><%= property.street_number %>&nbsp;</div>
-          <div class=""><%= property.route_short %></div>
-        </div>
-        <div class="flex text-xs text-gray-400 whitespace-nowrap">
-          <div class=""><%= property.locality %>, <%= property.administrative_area_level_1_short %></div>
-        </div>
-        <!-- Propery info section -->
-        <div class="inline-flex mt-3 text-xs text-gray-500">
-          <div class="flex flex-col mx-auto">
-            <div class="mx-auto"><%= property.bedrooms %></div>
-            <%= if property.bedrooms == 1 do %>
-              <div class="">Bed</div>
-            <% else %>
-              <div class="">Beds</div>
-            <% end %>
+          <div class="flex text-xs text-gray-400 whitespace-nowrap">
+            <div class=""><%= property.locality %>, <%= property.administrative_area_level_1_short %></div>
           </div>
-          <div class="flex flex-col mx-auto ml-3">
-            <div class="mx-auto"><%= property.washrooms %></div>
-            <%= if property.washrooms == 1 do %>
-              <div class="">Bath</div>
-            <% else %>
-              <div class="">Baths</div>
-            <% end %>
-          </div>
-          <div class="flex flex-col mx-auto ml-3">
-            <div class="mx-auto proportional-nums"><%= property.square_footage %></div>
-            <div class="">Sq Ft</div>
-          </div>
-          <div class="flex flex-col mx-auto ml-3 <%= if property.monthly_rent == nil, do: "hidden" %>">
-            <div class="mx-auto proportional-nums">$<%= property.monthly_rent %></div>
-            <div class="">Monthly</div>
+          <!-- Propery info section -->
+          <div class="inline-flex mt-3 text-xs text-gray-500">
+            <div class="flex flex-col mx-auto">
+              <div class="mx-auto"><%= property.bedrooms %></div>
+              <%= if property.bedrooms == 1 do %>
+                <div class="">Bed</div>
+              <% else %>
+                <div class="">Beds</div>
+              <% end %>
+            </div>
+            <div class="flex flex-col mx-auto ml-3">
+              <div class="mx-auto"><%= property.washrooms %></div>
+              <%= if property.washrooms == 1 do %>
+                <div class="">Bath</div>
+              <% else %>
+                <div class="">Baths</div>
+              <% end %>
+            </div>
+            <div class="flex flex-col mx-auto ml-3">
+              <div class="mx-auto proportional-nums"><%= property.square_footage %></div>
+              <div class="">Sq Ft</div>
+            </div>
+            <div class="flex flex-col mx-auto ml-3 <%= if property.monthly_rent == nil, do: "hidden" %>">
+              <div class="mx-auto proportional-nums">$<%= property.monthly_rent %></div>
+              <div class="">Monthly</div>
+            </div>
           </div>
         </div>
       </div>
