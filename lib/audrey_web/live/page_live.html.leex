@@ -1,13 +1,13 @@
 <div class="flex max-h-(screen-16) max-w-full mx-auto">
   <!-- Propery Cards section -->
-  <div class="w-full p-4 overflow-y-scroll test md:w-144">
+  <div class="flex flex-col w-full p-4 overflow-y-scroll md:w-144">
     <%= for property <- @properties do %>
       <div phx-click="property-redirect"
            phx-value-property-id="<%= property.id %>"
-           class="my-2 text-sm font-semibold text-gray-600 bg-white rounded-lg shadow-md appearance-none cursor-pointer h-max hover:shadow-lg hover:bg-gray-50"
+           class="my-2 text-gray-600 bg-white rounded-lg shadow-md appearance-none cursor-pointer h-max hover:shadow-lg hover:bg-gray-50"
       >
         <%= img_tag(Routes.static_path(@socket, "/images/resized_stock_house.png"), class: "object-cover rounded-t-lg z-10") %>
-        <div class="p-4 rounded-b-lg">
+        <div class="p-4 text-base font-semibold rounded-b-lg">
           <div class="flex flex-wrap">
             <div class="<%= if Map.get(property,:neighborhood, nil) == nil, do: "hidden" %>">
               <div class="whitespace-nowrap"><%= Map.get(property, :neighborhood, "") %>&nbsp;-&nbsp;</div>
@@ -19,7 +19,7 @@
             <div class=""><%= property.locality %>, <%= property.administrative_area_level_1_short %></div>
           </div>
           <!-- Propery info section -->
-          <div class="inline-flex mt-3 text-xs text-gray-500">
+          <div class="inline-flex mt-3 text-sm text-gray-500">
             <div class="flex flex-col mx-auto">
               <div class="mx-auto"><%= property.bedrooms %></div>
               <%= if property.bedrooms == 1 do %>
