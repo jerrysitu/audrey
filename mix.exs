@@ -49,7 +49,8 @@ defmodule Audrey.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:timex, "~> 3.6.2"},
       {:tesla, "~> 1.4"},
-      {:exsync, "~> 0.2.4", only: :dev}
+      {:exsync, "~> 0.2.4", only: :dev},
+      {:exconstructor, "~> 1.1"}
     ]
   end
 

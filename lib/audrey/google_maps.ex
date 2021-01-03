@@ -102,6 +102,7 @@ defmodule Audrey.GoogleMaps do
       latitude: lat,
       google_maps_place_id: place_id
     }
+    |> Audrey.Location.GoogleGeocode.new()
   end
 
   defp get_by_type(address_component, type) do

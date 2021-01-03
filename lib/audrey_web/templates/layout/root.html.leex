@@ -11,22 +11,26 @@
 
   </head>
   <body class="antialiased">
-    <header class="relative z-50 flex items-center justify-between w-full h-16 text-gray-700 bg-white border-gray-100 shadow-md sm:z-50 sm:flex sm:top-0 <%= if @conn.assigns.live_module == AudreyWeb.PageLive, do: "sm:sticky" %>">
-      <a href="<%= Routes.page_path(@conn, :index) %>" class="ml-4 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-blue-500">AudreyApp</a>
-      <%= if Application.get_env(:audrey, :env) == :dev do %>
-        <div class="hidden ml-4">
-          <div class="sm:hidden md:hidden lg:hidden">Default</div>
-          <div class="hidden sm:block md:hidden lg:hidden">Small</div>
-          <div class="hidden sm:hidden md:block lg:hidden">Medium</div>
-          <div class="hidden sm:hidden md:hidden lg:block">Large</div>
+    <nav class="bg-white shadow">
+      <div class="px-6 py-3 mx-auto md:flex md:justify-between md:items-center">
+
+        <div class="flex items-center justify-between">
+          <div>
+            <a class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-blue-500" href="<%= Routes.page_path(@conn, :index) %>">AudreyApp</a>
+          </div>
         </div>
-      <% end %>
-      <div class="mr-4">
-        <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-          <a href="<%= Routes.property_setup_path(@conn, :setup) %>" class="btn btn-emerald whitespace-nowrap">New Property</a>
-        <% end %>
+
+        <div class="items-center md:flex">
+          <div class="flex flex-col md:flex-row md:mx-6">
+            <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
+            <a class="my-1 text-base font-medium text-gray-700 hover:text-indigo-500 md:mx-2 md:my-0" href="<%= Routes.property_setup_path(@conn, :setup) %>">Create New Property</a>
+            <% end %>
+          </div>
+        </div>
+
       </div>
-    </header>
+    </nav>
+
     <%= @inner_content %>
   </body>
 </html>
