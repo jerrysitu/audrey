@@ -5,6 +5,7 @@
       <div phx-click="property-redirect"
            phx-value-property-id="<%= property.id %>"
            class="my-2 text-gray-600 bg-white rounded-lg shadow-md appearance-none cursor-pointer h-max hover:shadow-lg hover:bg-gray-50"
+           id="property_<%= property.id %>"
       >
         <%= img_tag(Routes.static_path(@socket, "/images/resized_stock_house.png"), class: "object-cover rounded-t-lg z-10") %>
         <div class="p-4 text-base font-semibold rounded-b-lg">
@@ -203,11 +204,22 @@
       map.setMapTypeId("styled_map");
 
       const markers = locations.map((location, i) => {
-        return new google.maps.Marker({
-          position: location,
+        let marker = new google.maps.Marker({
+          position: { lat: location.lat, lng: location.lng },
           icon: 'https://img.icons8.com/plasticine/50/000000/marker.png',
           map
         });
+
+        marker.addListener("click", () => {
+          let property_card = document.querySelector(`#property_${location.id}`)
+
+          property_card.classList.add("ring-8", "ring-emerald-400", "bg-gray-100")
+          property_card.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+
+          afterFocus(location.id)
+        });
+
+        return marker
       });
 
       new MarkerClusterer(map, markers, {
@@ -224,7 +236,15 @@
 <script>
     const locations = []
     <%= for property <- @properties do %>
-      locationMap = { lat: <%= property.latitude %>, lng: <%= property.longitude %>};
+      locationMap = { lat: <%= property.latitude %>, lng: <%= property.longitude %>, id: <%= property.id %>};
       locations.push(locationMap)
     <% end %>
+</script>
+
+<script>
+  afterFocus = (property_id) => {
+    let property_card = document.querySelector(`#property_${property_id}`)
+
+    setTimeout(function(){ property_card.classList.remove("ring-8", "ring-emerald-400", "bg-gray-100") }, 2000);
+  }
 </script>
