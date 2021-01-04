@@ -23,21 +23,6 @@ defmodule AudreyWeb.PageLive do
   end
 
   def handle_event(
-        "property-redirect",
-        %{"property-id" => property_id} = params,
-        socket
-      ) do
-    IO.inspect(params, label: "params!!")
-
-    {:noreply,
-     socket
-     |> redirect(to: Routes.property_show_path(socket, :show, property_id))}
-
-    # socket
-    # |> redirect(to: Routes.property_show_path(socket, :show, property_id))
-  end
-
-  def handle_event(
         "redirect-to-setup",
         _params,
         socket
@@ -46,7 +31,4 @@ defmodule AudreyWeb.PageLive do
      socket
      |> redirect(to: Routes.property_setup_path(socket, :setup))}
   end
-
-  defp account_for_empty_list(nil), do: %{}
-  defp account_for_empty_list(map), do: map
 end

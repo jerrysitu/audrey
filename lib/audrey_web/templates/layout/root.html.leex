@@ -23,7 +23,7 @@
         <div class="items-center md:flex">
           <div class="flex flex-col md:flex-row md:mx-6">
             <%= unless @conn.assigns.live_module == AudreyWeb.PropertyLive.Setup do %>
-            <a class="my-1 text-base font-medium text-gray-700 hover:text-indigo-500 md:mx-2 md:my-0" href="<%= Routes.property_setup_path(@conn, :setup) %>">Create New Property</a>
+            <a class="mt-2 btn btn-emerald sm:mt-0" href="<%= Routes.property_setup_path(@conn, :setup) %>">Create New Property</a>
             <% end %>
           </div>
         </div>

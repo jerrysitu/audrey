@@ -202,11 +202,13 @@ defmodule Audrey.Location.Property do
 
   def convert_sale_or_rent(:sale), do: "sale"
   def convert_sale_or_rent(:rent), do: "rent"
+  def convert_sale_or_rent(_), do: "sale or rent"
 
   def convert_laundry_type(:in_suite_laundry), do: "In-Suite Laundry"
   def convert_laundry_type(:in_building_laundry), do: "In-building Laundry"
   def convert_laundry_type(:laundry_available), do: "Laundry Available"
   def convert_laundry_type(:none), do: "No Laundry"
+  def convert_laundry_type(_), do: "Laundry Unknown"
 
   def convert_parking(:attached_garage_parking), do: "Attached Garage Parking"
   def convert_parking(:detached_garage_parking), do: "Detached Garage Parking"
@@ -214,6 +216,7 @@ defmodule Audrey.Location.Property do
   def convert_parking(:off_street_parking), do: "Off Street Parking"
   def convert_parking(:parking_available), do: "Parking Available"
   def convert_parking(:none), do: "No Parking"
+  def convert_parking(_), do: "Parking Unknown"
 
   def convert_property_type(:apartment), do: "Apartment"
   def convert_property_type(:house), do: "House"
@@ -225,10 +228,12 @@ defmodule Audrey.Location.Property do
   def convert_property_type(:land), do: "Land"
   def convert_property_type(:flat), do: "Flat"
   def convert_property_type(:cottage_or_cabin), do: "Cottage or Cabin"
+  def convert_property_type(_), do: "Property Type Unknown"
 
   def convert_air_conditioning_type(:central_ac), do: "Central A/C"
   def convert_air_conditioning_type(:ac_available), do: "A/C Available"
   def convert_air_conditioning_type(:none), do: "No A/C"
+  def convert_air_conditioning_type(_), do: "A/C Unknown"
 
   def convert_heating_type(:central_heating), do: "Central Heating"
   def convert_heating_type(:electric_heating), do: "Electrical Heating"
@@ -236,6 +241,7 @@ defmodule Audrey.Location.Property do
   def convert_heating_type(:radiator_heating), do: "Radiator Heating"
   def convert_heating_type(:heating_available), do: "Heating Available"
   def convert_heating_type(:none), do: "No Heating"
+  def convert_heating_type(_), do: "Heating Unknown"
 
   def convert_amenity(:wifi), do: "Wi-Fi"
   def convert_amenity(:bathtub), do: "Bathtub"
