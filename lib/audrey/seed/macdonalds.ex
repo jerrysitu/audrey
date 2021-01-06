@@ -525,6 +525,9 @@ defmodule Audrey.Seed.MacDonalds do
 
       Audrey.GoogleMaps.parse_geo_code_response(geocode_response)
       |> Map.put(:user_type, "landlord")
+      |> Map.put(:bedrooms, 2)
+      |> Map.put(:monthly_rent, 2200)
+      |> Map.put(:sale_or_rent, :rent)
       |> Map.put(:wifi, true)
       |> Map.put(:heating, true)
       |> Map.put(:air_conditioning, true)
